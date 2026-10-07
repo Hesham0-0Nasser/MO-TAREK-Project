@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#EEF0F3}a{color:#1D4F91;text-decoration:none}a:hover{color:#163D70}button,input{font-family:inherit}input::placeholder{color:#98A2B3}</style>
+</helmet>
+<div style="min-height:100vh;background:#EEF0F3;font-family:'IBM Plex Sans',sans-serif;color:#101828;display:flex;flex-direction:column">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 32px;background:#fff;border-bottom:1px solid #E4E7EC">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:36px;height:36px;border-radius:10px;background:{{ primary }};display:flex;align-items:center;justify-content:center">{{ logoIcon }}</div>
+      <div style="display:flex;flex-direction:column">
+        <span style="font-size:16px;font-weight:700">{{ brandEn }} · Customer app</span>
+        <span style="font-size:13px;color:#667085">Clickable prototype · React Native (Expo)</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a href="Mobile%20App.dc.html" style="height:40px;padding:0 16px;border-radius:10px;background:#101828;color:#fff;display:flex;align-items:center;font-size:14px;font-weight:600">Customer app</a>
+      <a href="Admin%20Dashboard.dc.html" style="height:40px;padding:0 16px;border-radius:10px;border:1px solid #D0D5DD;color:#101828;display:flex;align-items:center;font-size:14px;font-weight:600">Admin dashboard</a>
+      <a href="Design%20System.dc.html" style="height:40px;padding:0 16px;border-radius:10px;border:1px solid #D0D5DD;color:#101828;display:flex;align-items:center;font-size:14px;font-weight:600">Design system &amp; inventory</a>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:32px;padding:32px;align-items:flex-start;flex-wrap:wrap">
+    <div style="width:300px;flex-shrink:0;display:flex;flex-direction:column;gap:24px;background:#fff;border:1px solid #E4E7EC;border-radius:16px;padding:20px;box-sizing:border-box">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:#667085">Language view</span>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <sc-for list="{{ viewBtns }}" as="b" hint-placeholder-count="3">
+            <button onClick="{{ b.onClick }}" style="height:44px;border-radius:10px;border:1.5px solid {{ b.border }};background:{{ b.bg }};color:{{ b.fg }};font-size:14px;font-weight:600;cursor:pointer;text-align:start;padding:0 14px">{{ b.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:#667085">Flows to present</span>
+        <sc-for list="{{ flows }}" as="f" hint-placeholder-count="5">
+          <div style="display:flex;flex-direction:column;gap:8px;border-radius:12px;border:1.5px solid {{ f.border }};background:{{ f.bg }};padding:4px">
+            <button onClick="{{ f.onClick }}" style="display:flex;gap:10px;align-items:flex-start;border:0;background:transparent;padding:8px;cursor:pointer;text-align:start;color:#101828">
+              <span style="width:24px;height:24px;border-radius:12px;background:{{ f.numBg }};color:{{ f.numFg }};font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ f.n }}</span>
+              <span style="display:flex;flex-direction:column;gap:2px">
+                <span style="font-size:14px;font-weight:600">{{ f.title }}</span>
+                <span style="font-size:12px;color:#667085">{{ f.sub }}</span>
+              </span>
+            </button>
+            <sc-if value="{{ f.active }}">
+              <div style="display:flex;flex-direction:column;gap:6px;padding:0 12px 10px 42px">
+                <sc-for list="{{ f.steps }}" as="st">
+                  <span style="font-size:13px;line-height:18px;color:#344054">{{ st }}</span>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ showDemo }}">
+        <div style="display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:12px;background:#F6F7F9">
+          <span style="font-size:13px;color:#344054;line-height:18px">Demo customer: 0551234567, any password. Password <b>Temp1234</b> shows the forced password change.</span>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button onClick="{{ fillDemo }}" style="height:36px;padding:0 12px;border-radius:8px;border:1px solid #D0D5DD;background:#fff;font-size:13px;font-weight:600;cursor:pointer">Fill demo login</button>
+            <button onClick="{{ fillTemp }}" style="height:36px;padding:0 12px;border-radius:8px;border:1px solid #D0D5DD;background:#fff;font-size:13px;font-weight:600;cursor:pointer">Fill temp password</button>
+          </div>
+        </div>
+      </sc-if>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:#667085">States</span>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ states }}" as="x" hint-placeholder-count="8">
+            <button onClick="{{ x.onClick }}" style="height:34px;padding:0 12px;border-radius:17px;border:1px solid #D0D5DD;background:#fff;font-size:13px;font-weight:500;cursor:pointer;color:#344054" style-hover="background:#F2F4F7">{{ x.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <button onClick="{{ restart }}" style="height:40px;border-radius:10px;border:0;background:#F2F4F7;font-size:14px;font-weight:600;cursor:pointer;color:#344054">Restart prototype</button>
+    </div>
+
+    <div style="flex:1;min-width:0;display:flex;gap:48px;justify-content:center;flex-wrap:wrap;align-items:flex-start">
+      <sc-for list="{{ phones }}" as="p" hint-placeholder-count="1">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:14px">
+          <div style="display:flex;align-items:center;gap:8px;height:32px;padding:0 14px;border-radius:16px;background:#fff;border:1px solid #E4E7EC;font-size:14px;font-weight:600;color:#344054;font-family:{{ p.font }}">{{ p.label }}</div>
+          <div style="padding:10px;border-radius:50px;background:#0F1728;box-shadow:0 20px 50px rgba(16,24,40,0.18)">
+            <div dir="{{ p.dir }}" style="width:{{ p.w }};height:780px;border-radius:40px;overflow:hidden;background:#F6F7F9;position:relative;display:flex;flex-direction:column;font-family:{{ p.font }};color:#101828">
+              <div dir="ltr" style="height:44px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 30px;font-family:'IBM Plex Sans',sans-serif;font-size:15px;font-weight:600;color:{{ p.sbColor }};position:relative;z-index:6">
+                <span>9:41</span>
+                <div style="display:flex;gap:6px;align-items:center">{{ p.i.wifi }}<div style="width:25px;height:12px;border:1.5px solid currentColor;border-radius:4px;padding:1.5px;box-sizing:border-box"><div style="width:70%;height:100%;background:currentColor;border-radius:1px"></div></div></div>
+              </div>
+
+              <sc-if value="{{ p.s.header }}">
+                <div style="height:56px;flex-shrink:0;display:flex;align-items:center;gap:4px;padding:0 8px">
+                  <sc-if value="{{ p.s.showBack }}">
+                    <button onClick="{{ p.back }}" aria-label="{{ p.t.backLabel }}" style="width:48px;height:48px;border-radius:24px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#101828" style-active="background:#E4E7EC">{{ p.i.back }}</button>
+                  </sc-if>
+                  <span style="font-size:18px;font-weight:700;padding:0 12px">{{ p.headerTitle }}</span>
+                </div>
+              </sc-if>
+
+              <div style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column">
+
+                <sc-if value="{{ p.s.home }}" hint-placeholder-val="{{ true }}">
+                  <div style="flex:1;display:flex;flex-direction:column;gap:24px;padding:8px 20px 24px">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px">
+                      <div style="display:flex;align-items:center;gap:10px;min-width:0">
+                        <div style="width:40px;height:40px;border-radius:12px;background:{{ p.c.primary }};display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ p.i.logo }}</div>
+                        <span style="font-size:17px;font-weight:700">{{ p.brand }}</span>
+                      </div>
+                      <button onClick="{{ p.toggleLang }}" style="height:48px;padding:0 16px;border-radius:24px;border:1.5px solid #D0D5DD;background:#fff;display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:#101828;cursor:pointer;flex-shrink:0;font-family:{{ p.altFont }}" style-active="background:#F2F4F7">{{ p.i.globe }}<span>{{ p.t.langSwitch }}</span></button>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:8px;padding-top:16px">
+                      <h1 style="margin:0;font-size:28px;line-height:38px;font-weight:700">{{ p.t.homeTitle }}</h1>
+                      <p style="margin:0;font-size:16px;line-height:26px;color:#475467;text-wrap:pretty">{{ p.t.homeSub }}</p>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:12px">
+                      <label style="font-size:15px;font-weight:600;color:#344054">{{ p.t.numLabel }}</label>
+                      <div style="display:flex;align-items:center;gap:8px;height:64px;background:#fff;border:2px solid {{ p.qBorder }};border-radius:14px;padding-inline-start:16px;padding-inline-end:8px;box-sizing:border-box">
+                        <input value="{{ p.query }}" onChange="{{ p.onQuery }}" onKeyDown="{{ p.onQueryKey }}" placeholder="{{ p.t.numPh }}" style="flex:1;min-width:0;height:100%;border:0;outline:none;background:transparent;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:500;letter-spacing:0.5px;color:#101828">
+                        <button onClick="{{ p.onPaste }}" style="height:48px;padding:0 12px;border-radius:10px;border:0;background:{{ p.c.soft }};color:{{ p.c.primary }};display:flex;align-items:center;gap:6px;font-size:15px;font-weight:600;cursor:pointer;flex-shrink:0">{{ p.i.paste }}<span>{{ p.t.paste }}</span></button>
+                      </div>
+                      <sc-if value="{{ p.qErr }}"><span style="font-size:15px;color:#B42318">{{ p.t.emptyNum }}</span></sc-if>
+                      <button onClick="{{ p.onTrack }}" style="height:56px;width:100%;border:0;border-radius:14px;background:{{ p.c.primary }};color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;font-size:18px;font-weight:600;cursor:pointer" style-active="opacity:0.85">{{ p.i.searchW }}<span>{{ p.t.track }}</span></button>
+                    </div>
+                    <div style="flex:1"></div>
+                    <div style="display:flex;flex-direction:column;gap:12px;padding:16px;background:#fff;border:1px solid #EAECF0;border-radius:16px">
+                      <span style="font-size:16px;line-height:24px;color:#475467;text-align:center">{{ p.t.haveAccount }}</span>
+                      <button onClick="{{ p.goLogin }}" style="height:56px;width:100%;border:1.5px solid #D0D5DD;border-radius:14px;background:#fff;color:#101828;font-size:17px;font-weight:600;cursor:pointer" style-active="background:#F2F4F7">{{ p.t.login }}</button>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ p.s.hero }}">
+                  <div style="display:flex;flex-direction:column;gap:16px;padding:4px 16px 24px">
+                    <div style="background:#fff;border:1px solid #EAECF0;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 3px rgba(16,24,40,0.06)">
+                      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                        <div style="display:flex;flex-direction:column;gap:2px;align-items:flex-start">
+                          <span style="font-size:14px;color:#667085">{{ p.t.numLabel }}</span>
+                          <span dir="ltr" style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:600;letter-spacing:0.5px">{{ p.sh.no }}</span>
+                        </div>
+                        <button onClick="{{ p.onCopy }}" style="height:44px;padding:0 12px;border-radius:10px;border:0;background:{{ p.c.soft }};color:{{ p.c.primary }};display:flex;gap:6px;align-items:center;font-size:15px;font-weight:600;cursor:pointer;flex-shrink:0">{{ p.i.copy }}<span>{{ p.t.copy }}</span></button>
+                      </div>
+                      <div style="display:flex;align-items:center;gap:14px;padding:16px;border-radius:16px;background:{{ p.sh.bg }}">
+                        <div style="width:52px;height:52px;border-radius:26px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ p.sh.icon }}</div>
+                        <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                          <span style="font-size:24px;line-height:32px;font-weight:700;color:{{ p.sh.fg }}">{{ p.sh.name }}</span>
+                          <span style="font-size:15px;color:#344054">{{ p.t.lastUpdate }}: {{ p.sh.last }}</span>
+                        </div>
+                      </div>
+                      <sc-if value="{{ p.sh.showDesc }}">
+                        <div style="display:flex;flex-direction:column;gap:2px;border-top:1px solid #EAECF0;padding-top:16px">
+                          <span style="font-size:14px;color:#667085">{{ p.t.description }}</span>
+                          <span style="font-size:17px;font-weight:500">{{ p.sh.desc }}</span>
+                        </div>
+                      </sc-if>
+                    </div>
+                    <sc-if value="{{ p.s.banner }}">
+                      <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:16px;background:{{ p.c.soft }}">
+                        {{ p.i.bell }}
+                        <div style="flex:1;display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+                          <span style="font-size:16px;line-height:24px">{{ p.t.bannerText }}</span>
+                          <button onClick="{{ p.goLogin }}" style="height:44px;padding:0 18px;border-radius:12px;border:0;background:{{ p.c.primary }};color:#fff;font-size:15px;font-weight:600;cursor:pointer">{{ p.t.login }}</button>
+                        </div>
+                      </div>
+                    </sc-if>
+                    <div style="background:#fff;border:1px solid #EAECF0;border-radius:20px;padding:20px 20px 4px;display:flex;flex-direction:column;gap:16px">
+                      <span style="font-size:17px;font-weight:700">{{ p.t.history }}</span>
+                      <div style="display:flex;flex-direction:column">
+                        <sc-for list="{{ p.sh.tl }}" as="e" hint-placeholder-count="2">
+                          <div style="display:flex;gap:12px;align-items:stretch">
+                            <div style="width:36px;display:flex;flex-direction:column;align-items:center;flex-shrink:0">
+                              <div style="width:36px;height:36px;border-radius:18px;background:{{ e.dotBg }};display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ e.icon }}</div>
+                              <div style="flex:1;width:2px;min-height:12px;margin:4px 0;background:{{ e.line }}"></div>
+                            </div>
+                            <div style="flex:1;min-width:0;padding:6px 0 20px;display:flex;flex-direction:column;gap:2px;align-items:flex-start">
+                              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                                <span style="font-size:17px;font-weight:{{ e.weight }};color:{{ e.color }}">{{ e.name }}</span>
+                                <sc-if value="{{ e.current }}"><span style="height:24px;padding:0 10px;border-radius:12px;background:{{ e.curBg }};color:{{ e.curFg }};font-size:13px;font-weight:700;display:flex;align-items:center">{{ e.curLabel }}</span></sc-if>
+                              </div>
+                              <span style="font-size:15px;color:#667085">{{ e.date }}</span>
+                              <sc-if value="{{ e.hasNote }}"><span style="font-size:15px;line-height:22px;color:#344054;background:#F6F7F9;border-radius:10px;padding:8px 12px;margin-top:6px">{{ e.note }}</span></sc-if>
+                            </div>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ p.s.login }}">
+                  <div style="display:flex;flex-direction:column;gap:20px;padding:4px 20px 24px">
+                    <p style="margin:0;font-size:16px;line-height:24px;color:#475467">{{ p.t.loginSub }}</p>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <label style="font-size:15px;font-weight:600;color:#344054">{{ p.t.mobile }}</label>
+                      <input type="tel" dir="ltr" value="{{ p.mobile }}" onChange="{{ p.onMobile }}" placeholder="05XXXXXXXX" style="height:56px;box-sizing:border-box;background:#fff;border:1.5px solid {{ p.mBorder }};border-radius:14px;padding:0 16px;font-size:18px;letter-spacing:0.5px;outline:none;text-align:{{ p.align }};color:#101828">
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <label style="font-size:15px;font-weight:600;color:#344054">{{ p.t.password }}</label>
+                      <div style="display:flex;align-items:center;height:56px;box-sizing:border-box;background:#fff;border:1.5px solid {{ p.pBorder }};border-radius:14px;padding-inline-start:16px;padding-inline-end:4px">
+                        <input type="{{ p.pwType }}" value="{{ p.pw }}" onChange="{{ p.onPw }}" onKeyDown="{{ p.onLoginKey }}" style="flex:1;min-width:0;height:100%;border:0;outline:none;background:transparent;font-size:18px;color:#101828">
+                        <button onClick="{{ p.togglePw }}" style="height:48px;padding:0 10px;border:0;background:transparent;display:flex;align-items:center;gap:6px;color:#475467;font-size:15px;font-weight:600;cursor:pointer;flex-shrink:0">{{ p.i.eye }}<span>{{ p.pwToggleLabel }}</span></button>
+                      </div>
+                    </div>
+                    <sc-if value="{{ p.hasLoginErr }}">
+                      <div style="display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;background:#FDECEA;color:#B42318;font-size:15px;line-height:22px">{{ p.i.alertRed }}<span>{{ p.loginErrText }}</span></div>
+                    </sc-if>
+                    <button onClick="{{ p.onLogin }}" style="height:56px;width:100%;border:0;border-radius:14px;background:{{ p.c.primary }};color:#fff;font-size:18px;font-weight:600;cursor:pointer" style-active="opacity:0.85">{{ p.t.login }}</button>
+                    <button onClick="{{ p.goForgot }}" style="height:48px;border:0;background:transparent;color:{{ p.c.primary }};font-size:16px;font-weight:600;cursor:pointer;text-decoration:underline;align-self:center;padding:0 12px">{{ p.t.forgot }}</button>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ p.s.forgot }}">
+                  <div style="display:flex;flex-direction:column;gap:20px;padding:24px 20px">
+                    <div style="width:80px;height:80px;border-radius:40px;background:{{ p.c.soft }};display:flex;align-items:center;justify-content:center;align-self:center">{{ p.i.contactBig }}</div>
+                    <p style="margin:0;font-size:18px;line-height:28px;text-align:center;font-weight:500;text-wrap:pretty">{{ p.contactText }}</p>
+                    <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:4px;align-items:center">
+                      <span style="font-size:14px;color:#667085">{{ p.t.adminNumber }}</span>
+                      <span dir="ltr" style="font-size:22px;font-weight:700;letter-spacing:0.5px">+966 11 456 7890</span>
+                    </div>
+                    <button onClick="{{ p.onCall }}" style="height:56px;width:100%;border:0;border-radius:14px;background:{{ p.c.primary }};color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;font-size:18px;font-weight:600;cursor:pointer" style-active="opacity:0.85">{{ p.i.phoneW }}<span>{{ p.t.call }}</span></button>
+                    <button onClick="{{ p.onWa }}" style="height:56px;width:100%;border:1.5px solid #D0D5DD;border-radius:14px;background:#fff;color:#101828;display:flex;align-items:center;justify-content:center;gap:10px;font-size:17px;font-weight:600;cursor:pointer" style-active="background:#F2F4F7">{{ p.i.chat }}<span>{{ p.t.whatsapp }}</span></button>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ p.s.force }}">
+                  <div style="display:flex;flex-direction:column;gap:20px;padding:4px 20px 24px">
+                    <sc-if value="{{ p.s.temp }}">
+                      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:14px;background:#FEF3E2;color:#7A2E0E;font-size:16px;line-height:24px">{{ p.i.infoAmber }}<span>{{ p.t.tempText }}</span></div>
+                    </sc-if>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <label style="font-size:15px;font-weight:600;color:#344054">{{ p.t.newPw }}</label>
+                      <div style="display:flex;align-items:center;height:56px;box-sizing:border-box;background:#fff;border:1.5px solid #D0D5DD;border-radius:14px;padding-inline-start:16px;padding-inline-end:4px">
+                        <input type="{{ p.npType }}" value="{{ p.np }}" onChange="{{ p.onNp }}" style="flex:1;min-width:0;height:100%;border:0;outline:none;background:transparent;font-size:18px;color:#101828">
+                        <button onClick="{{ p.toggleNp }}" style="height:48px;padding:0 10px;border:0;background:transparent;display:flex;align-items:center;gap:6px;color:#475467;font-size:15px;font-weight:600;cursor:pointer;flex-shrink:0">{{ p.i.eyeNp }}<span>{{ p.npToggleLabel }}</span></button>
+                      </div>
+                      <div style="display:flex;gap:6px;padding-top:4px">
+                        <div style="flex:1;height:6px;border-radius:3px;background:{{ p.str.c1 }}"></div>
+                        <div style="flex:1;height:6px;border-radius:3px;background:{{ p.str.c2 }}"></div>
+                        <div style="flex:1;height:6px;border-radius:3px;background:{{ p.str.c3 }}"></div>
+                      </div>
+                      <div style="display:flex;justify-content:space-between;gap:8px;font-size:14px;color:#667085">
+                        <span>{{ p.t.rule }}</span>
+                        <span style="font-weight:700;color:{{ p.str.color }}">{{ p.str.label }}</span>
+                      </div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <label style="font-size:15px;font-weight:600;color:#344054">{{ p.t.confirmPw }}</label>
+                      <input type="{{ p.npType }}" value="{{ p.cp }}" onChange="{{ p.onCp }}" style="height:56px;box-sizing:border-box;background:#fff;border:1.5px solid {{ p.cpBorder }};border-radius:14px;padding:0 16px;font-size:18px;outline:none;color:#101828">
+                      <sc-if value="{{ p.mismatch }}"><span style="font-size:15px;color:#B42318">{{ p.t.mismatch }}</span></sc-if>
+                    </div>
+                    <button onClick="{{ p.onSavePw }}" style="height:56px;width:100%;border:0;border-radius:14px;background:{{ p.c.primary }};color:#fff;font-size:18px;font-weight:600;cursor:pointer;opacity:{{ p.saveOpacity }}">{{ p.t.savePw }}</button>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ p.s.list }}">
+                  <div style="display:flex;flex-direction:column;gap:16px;padding:8px 16px 24px">
+                    <div style="display:flex;flex-direction:column;gap:2px;padding:8px 4px 0">
+                      <span style="font-size:16px;color:#475467">{{ p.t.hello }}</span>
+                      <h1 style="margin:0;font-size:26px;line-height:34px;font-weight:700">{{ p.t.myShipments }}</h1>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;height:56px;box-sizing:border-box;background:#fff;border:1.5px solid #D0D5DD;border-radius:14px;padding-inline-start:14px;padding-inline-end:6px">
+                      {{ p.i.search }}
+                      <input value="{{ p.query }}" onChange="{{ p.onQuery }}" onKeyDown="{{ p.onQueryKey }}" placeholder="{{ p.t.searchPh }}" style="flex:1;min-width:0;height:100%;border:0;outline:none;background:transparent;font-size:17px;color:#101828">
+                      <sc-if value="{{ p.hasQuery }}"><button onClick="{{ p.onTrack }}" style="height:44px;padding:0 14px;border-radius:10px;border:0;background:{{ p.c.primary }};color:#fff;font-size:15px;font-weight:600;cursor:pointer">{{ p.t.track }}</button></sc-if>
+                    </div>
+                    <sc-if value="{{ p.refreshing }}">
+                      <div style="display:flex;align-items:center;justify-content:center;gap:8px;height:40px;color:#475467;font-size:15px">{{ p.i.refresh }}<span>{{ p.t.refreshing }}</span></div>
+                    </sc-if>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap">
+                      <sc-for list="{{ p.chips }}" as="ch" hint-placeholder-count="3">
+                        <button onClick="{{ ch.onClick }}" style="height:44px;padding:0 18px;border-radius:22px;border:1.5px solid {{ ch.border }};background:{{ ch.bg }};color:{{ ch.fg }};font-size:15px;font-weight:600;cursor:pointer">{{ ch.label }}</button>
+                      </sc-for>
+                    </div>
+                    <sc-for list="{{ p.list }}" as="it" hint-placeholder-count="4">
+                      <button onClick="{{ it.open }}" style="width:100%;text-align:start;background:#fff;border:1px solid #EAECF0;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px;cursor:pointer;box-shadow:0 1px 2px rgba(16,24,40,0.05);color:#101828" style-active="background:#F9FAFB">
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%">
+                          <div style="display:flex;flex-direction:column;gap:2px;min-width:0;align-items:flex-start">
+                            <span dir="ltr" style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">{{ it.no }}</span>
+                            <span style="font-size:16px;color:#475467">{{ it.desc }}</span>
+                          </div>
+                          {{ p.i.fwd }}
+                        </div>
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;width:100%">
+                          <span style="display:flex;align-items:center;gap:6px;min-height:32px;padding:0 12px;border-radius:16px;background:{{ it.bg }};color:{{ it.fg }};font-size:15px;font-weight:600">{{ it.icon }}<span>{{ it.name }}</span></span>
+                          <span style="font-size:14px;color:#667085">{{ it.last }}</span>
+                        </div>
+                      </button>
+                    </sc-for>
+                    <sc-if value="{{ p.s.empty }}">
+                      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;padding:48px 16px;text-align:center">
+                        <div style="width:80px;height:80px;border-radius:40px;background:#fff;border:1px solid #EAECF0;display:flex;align-items:center;justify-content:center">{{ p.i.pkgBig }}</div>
+                        <span style="font-size:19px;font-weight:700">{{ p.t.emptyTitle }}</span>
+                        <span style="font-size:16px;line-height:24px;color:#475467;text-wrap:pretty">{{ p.t.emptyText }}</span>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ p.s.settings }}">
+                  <div style="display:flex;flex-direction:column;gap:16px;padding:8px 16px 24px">
+                    <h1 style="margin:8px 4px 0;font-size:26px;line-height:34px;font-weight:700">{{ p.t.settingsTitle }}</h1>
+                    <div style="display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #EAECF0;border-radius:18px;padding:16px">
+                      <div style="width:52px;height:52px;border-radius:26px;background:{{ p.c.soft }};color:{{ p.c.primary }};display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;flex-shrink:0">{{ p.t.initial }}</div>
+                      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:2px">
+                        <span style="font-size:17px;font-weight:700">{{ p.t.custName }}</span>
+                        <span dir="ltr" style="font-size:15px;color:#475467">0551234567</span>
+                      </div>
+                    </div>
+                    <div style="background:#fff;border:1px solid #EAECF0;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px">
+                      <div style="display:flex;align-items:center;gap:12px">{{ p.i.globeRow }}<span style="font-size:17px;font-weight:600">{{ p.t.language }}</span></div>
+                      <div style="display:flex;gap:4px;padding:4px;background:#F2F4F7;border-radius:14px">
+                        <sc-for list="{{ p.langSeg }}" as="o" hint-placeholder-count="2">
+                          <button onClick="{{ o.onClick }}" style="flex:1;height:48px;border:0;border-radius:10px;background:{{ o.bg }};color:{{ o.fg }};font-size:16px;font-weight:600;cursor:pointer;box-shadow:{{ o.shadow }};font-family:{{ o.font }}">{{ o.label }}</button>
+                        </sc-for>
+                      </div>
+                    </div>
+                    <div style="background:#fff;border:1px solid #EAECF0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+                      <button onClick="{{ p.toggleNotif }}" style="min-height:72px;width:100%;border:0;background:#fff;display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;color:#101828;text-align:start" style-active="background:#F9FAFB">
+                        {{ p.i.bellRow }}
+                        <span style="flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:2px">
+                          <span style="font-size:17px;font-weight:600">{{ p.t.notifications }}</span>
+                          <span style="font-size:14px;color:#667085">{{ p.t.notifSub }}</span>
+                        </span>
+                        <span style="width:52px;height:32px;border-radius:16px;background:{{ p.sw.track }};padding:2px;box-sizing:border-box;display:flex;justify-content:{{ p.sw.justify }};flex-shrink:0"><span style="width:28px;height:28px;border-radius:14px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.2)"></span></span>
+                      </button>
+                      <div style="height:1px;background:#EAECF0;margin-inline-start:52px"></div>
+                      <button onClick="{{ p.goChangePw }}" style="min-height:64px;width:100%;border:0;background:#fff;display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;color:#101828;text-align:start" style-active="background:#F9FAFB">{{ p.i.lockRow }}<span style="flex:1;font-size:17px;font-weight:600">{{ p.t.changePw }}</span>{{ p.i.fwd }}</button>
+                      <div style="height:1px;background:#EAECF0;margin-inline-start:52px"></div>
+                      <button onClick="{{ p.goContact }}" style="min-height:64px;width:100%;border:0;background:#fff;display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;color:#101828;text-align:start" style-active="background:#F9FAFB">{{ p.i.phoneRow }}<span style="flex:1;font-size:17px;font-weight:600">{{ p.t.contact }}</span>{{ p.i.fwd }}</button>
+                    </div>
+                    <button onClick="{{ p.onLogout }}" style="min-height:60px;background:#fff;border:1px solid #EAECF0;border-radius:18px;display:flex;align-items:center;gap:12px;padding:0 16px;color:#B42318;font-size:17px;font-weight:600;cursor:pointer" style-active="background:#FEF3F2">{{ p.i.logout }}<span>{{ p.t.logout }}</span></button>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ p.s.state }}">
+                  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px 28px 48px;text-align:center">
+                    <div style="width:84px;height:84px;border-radius:42px;background:#fff;border:1px solid #EAECF0;display:flex;align-items:center;justify-content:center">{{ p.st.icon }}</div>
+                    <h2 style="margin:0;font-size:22px;line-height:30px;font-weight:700">{{ p.st.title }}</h2>
+                    <p style="margin:0;font-size:16px;line-height:24px;color:#475467;text-wrap:pretty">{{ p.st.text }}</p>
+                    <div style="width:100%;padding-top:8px">
+                      <button onClick="{{ p.st.action }}" style="height:56px;width:100%;border:0;border-radius:14px;background:{{ p.c.primary }};color:#fff;font-size:18px;font-weight:600;cursor:pointer" style-active="opacity:0.85">{{ p.st.btn }}</button>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ p.s.loading }}">
+                  <div style="display:flex;flex-direction:column;gap:16px;padding:16px">
+                    <div style="height:28px;width:55%;border-radius:8px;background:#E4E7EC"></div>
+                    <sc-for list="{{ p.skel }}" as="k" hint-placeholder-count="3">
+                      <div style="background:#fff;border:1px solid #EAECF0;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px">
+                        <div style="height:18px;width:50%;border-radius:6px;background:#EAECF0"></div>
+                        <div style="height:14px;width:75%;border-radius:6px;background:#F2F4F7"></div>
+                        <div style="height:30px;width:40%;border-radius:15px;background:#F2F4F7"></div>
+                      </div>
+                    </sc-for>
+                    <span style="text-align:center;font-size:15px;color:#667085">{{ p.t.loading }}</span>
+                  </div>
+                </sc-if>
+              </div>
+
+              <sc-if value="{{ p.s.notif }}">
+                <div style="position:absolute;inset:0;background:#1D2939;display:flex;flex-direction:column;align-items:center;padding:84px 12px 0;gap:4px;z-index:5">
+                  <span style="font-size:16px;color:#D0D5DD">{{ p.t.lockDate }}</span>
+                  <span style="font-family:'IBM Plex Sans',sans-serif;font-size:76px;line-height:88px;font-weight:600;color:#fff">9:41</span>
+                  <button onClick="{{ p.openNotif }}" style="margin-top:40px;width:100%;text-align:start;background:#F2F4F7;border:0;border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;cursor:pointer;color:#101828" style-active="background:#E4E7EC">
+                    <span style="display:flex;align-items:center;gap:8px;width:100%">
+                      <span style="width:24px;height:24px;border-radius:6px;background:{{ p.c.primary }};display:flex;align-items:center;justify-content:center">{{ p.i.logoSm }}</span>
+                      <span style="flex:1;font-size:14px;font-weight:600;color:#475467">{{ p.brand }}</span>
+                      <span style="font-size:14px;color:#667085">{{ p.t.notifNow }}</span>
+                    </span>
+                    <span style="font-size:16px;font-weight:700;line-height:22px">{{ p.t.notifTitle }}</span>
+                    <span style="font-size:15px;color:#475467">{{ p.t.notifBody }}</span>
+                  </button>
+                  <span style="margin-top:16px;font-size:14px;color:#98A2B3">{{ p.t.notifHint }}</span>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ p.s.tabs }}">
+                <div style="height:64px;flex-shrink:0;display:flex;background:#fff;border-top:1px solid #EAECF0">
+                  <sc-for list="{{ p.tabs }}" as="tb" hint-placeholder-count="2">
+                    <button onClick="{{ tb.onClick }}" style="flex:1;border:0;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:{{ tb.color }};font-size:13px;font-weight:600;cursor:pointer">{{ tb.icon }}<span>{{ tb.label }}</span></button>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <div style="height:30px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:{{ p.hiBg }};position:relative;z-index:6">
+                <div style="width:120px;height:5px;border-radius:3px;background:{{ p.hiColor }}"></div>
+              </div>
+
+              <sc-if value="{{ p.hasToast }}">
+                <div style="position:absolute;left:16px;right:16px;bottom:{{ p.toastBottom }};z-index:7;display:flex;justify-content:center">
+                  <div style="display:flex;align-items:center;gap:10px;background:#101828;color:#fff;border-radius:14px;padding:12px 16px;font-size:15px;font-weight:500;box-shadow:0 8px 24px rgba(16,24,40,0.2)">{{ p.i.checkW }}<span>{{ p.toastText }}</span></div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;brandEn&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Shipment Tracker&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Placeholder brand&quot;},&quot;brandAr&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;تتبع الشحنات&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Placeholder brand&quot;},&quot;primaryColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1D4F91&quot;,&quot;options&quot;:[&quot;#1D4F91&quot;,&quot;#0F6B5C&quot;,&quot;#3E3A8F&quot;,&quot;#8A3B12&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Placeholder brand&quot;},&quot;phoneWidth&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:360,&quot;options&quot;:[360,393,412],&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Device&quot;}}">
+const PATHS={
+package:['M21 8 12 3 3 8v8l9 5 9-5z','M3 8l9 5 9-5','M12 13v8','M7.5 5.5l9 5'],
+truck:['M2 6h12v10H2z','M14 9h4l4 4v3h-8','M6 19.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z','M18 19.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'],
+check:['M20 6 9 17l-5-5'],
+ret:['M9 14 4 9l5-5','M4 9h11a5 5 0 0 1 0 10h-4'],
+x:['M18 6 6 18','M6 6l12 12'],
+search:['M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z','M21 21l-4.3-4.3'],
+searchX:['M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z','M21 21l-4.3-4.3','M8.5 8.5l5 5','M13.5 8.5l-5 5'],
+chevL:['M15 18l-6-6 6-6'],chevR:['M9 18l6-6-6-6'],
+copy:['M9 9h11v11H9z','M5 15H4V4h11v1'],
+paste:['M9 3h6v4H9z','M9 5H6v16h12V5h-3'],
+eye:['M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z','M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'],
+eyeOff:['M3 3l18 18','M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3 3.9','M6.6 6.6C3.9 8.4 2 12 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6','M9.9 9.9a3 3 0 0 0 4.2 4.2'],
+bell:['M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9','M10.3 21a1.9 1.9 0 0 0 3.4 0'],
+globe:['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z','M3 12h18','M12 3a14 14 0 0 1 0 18','M12 3a14 14 0 0 0 0 18'],
+sliders:['M4 6h9','M17 6h3','M15 4v4','M4 12h3','M11 12h9','M9 10v4','M4 18h11','M19 18h1','M17 16v4'],
+phone:['M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z'],
+chat:['M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5.2A8.5 8.5 0 1 1 21 11.5z'],
+lock:['M5 11h14v10H5z','M8 11V7a4 4 0 1 1 8 0v4'],
+info:['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z','M12 16v-4','M12 8h.01'],
+alert:['M12 3 2 20h20z','M12 10v4','M12 17h.01'],
+wifiOff:['M2 2l20 20','M8.5 16.5a5 5 0 0 1 7 0','M5 13a10 10 0 0 1 5.2-2.8','M19 13a10 10 0 0 0-2.3-1.6','M2 8.8a15 15 0 0 1 4.2-2.7','M22 8.8A15 15 0 0 0 10.7 5','M12 20h.01'],
+wifi:['M5 12.5a10 10 0 0 1 14 0','M8.5 16a5 5 0 0 1 7 0','M2 9a15 15 0 0 1 20 0','M12 19.5h.01'],
+clock:['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z','M12 6v6l4 2'],
+logout:['M9 21H5V3h4','M16 17l5-5-5-5','M21 12H9'],
+refresh:['M21 12a9 9 0 1 1-3-6.7L21 8','M21 3v5h-5']
+};
+function ic(n,s,c,sw){return React.createElement('svg',{width:s||24,height:s||24,viewBox:'0 0 24 24',fill:'none',stroke:c||'currentColor',strokeWidth:sw||2,strokeLinecap:'round',strokeLinejoin:'round',style:{flexShrink:0,display:'block'}},(PATHS[n]||[]).map((d,i)=>React.createElement('path',{key:i,d})));}
+const TONES={blue:{fg:'#175CD3',bg:'#EAF2FD',solid:'#2E6FD9'},amber:{fg:'#B54708',bg:'#FEF3E2',solid:'#E08A0B'},green:{fg:'#067647',bg:'#E7F6EC',solid:'#16A34A'},red:{fg:'#B42318',bg:'#FDECEA',solid:'#D92D20'},purple:{fg:'#6941C6',bg:'#F2EEFC',solid:'#7F56D9'},gray:{fg:'#475467',bg:'#F1F3F5',solid:'#98A2B3'}};
+// Statuses come from the admin (name AR/EN, color, icon, final flag). These are the sample values.
+const ST={received:{ar:'تم الاستلام',en:'Received',tone:'blue',icon:'package',final:false},transit:{ar:'في الطريق',en:'In transit',tone:'amber',icon:'truck',final:false},delivered:{ar:'تم التسليم',en:'Delivered',tone:'green',icon:'check',final:true},returned:{ar:'مرتجع',en:'Returned',tone:'red',icon:'ret',final:true},cancelled:{ar:'ملغي',en:'Cancelled',tone:'gray',icon:'x',final:true}};
+const SH=[
+{no:'AB7K2M9XQ4',ar:'قطع غيار سيارات',en:'Car spare parts',status:'transit',last:{ar:'اليوم 10:30',en:'Today 10:30'},tl:[
+ {s:'received',d:{ar:'5 أكتوبر · 09:15',en:'5 Oct · 09:15'}},
+ {s:'transit',d:{ar:'6 أكتوبر · 14:40',en:'6 Oct · 14:40'},n:{ar:'غادرت المستودع',en:'Left the warehouse'}},
+ {s:'transit',d:{ar:'اليوم · 10:30',en:'Today · 10:30'},n:{ar:'وصلت إلى مركز الفرز في جدة',en:'Reached the Jeddah sorting center'}}]},
+{no:'KP3N8T5WZ2',ar:'أجهزة إلكترونية',en:'Electronics',status:'delivered',last:{ar:'أمس',en:'Yesterday'},tl:[
+ {s:'received',d:{ar:'3 أكتوبر · 11:00',en:'3 Oct · 11:00'}},
+ {s:'transit',d:{ar:'4 أكتوبر · 08:20',en:'4 Oct · 08:20'},n:{ar:'غادرت مستودع الرياض',en:'Left the Riyadh warehouse'}},
+ {s:'delivered',d:{ar:'أمس · 16:05',en:'Yesterday · 16:05'},n:{ar:'تم التسليم في الدمام',en:'Delivered in Dammam'}}]},
+{no:'HX9R4C6VB7',ar:'ملابس',en:'Clothing',status:'received',last:{ar:'قبل يومين',en:'2 days ago'},tl:[
+ {s:'received',d:{ar:'6 أكتوبر · 13:45',en:'6 Oct · 13:45'}}]},
+{no:'MD2F7Y8LQ3',ar:'أدوات منزلية',en:'Home tools',status:'returned',last:{ar:'قبل 5 أيام',en:'5 days ago'},tl:[
+ {s:'received',d:{ar:'29 سبتمبر · 10:10',en:'29 Sep · 10:10'}},
+ {s:'transit',d:{ar:'30 سبتمبر · 12:30',en:'30 Sep · 12:30'}},
+ {s:'returned',d:{ar:'3 أكتوبر · 15:20',en:'3 Oct · 15:20'},n:{ar:'تعذّر الوصول إلى المستلم',en:'The recipient could not be reached'}}]}
+];
+const T={
+en:{label:'English · LTR',langSwitch:'العربية',homeTitle:'Track your shipment',homeSub:'Enter the shipment number to see where it is.',numLabel:'Shipment number',numPh:'e.g. AB7K2M9XQ4',paste:'Paste',track:'Track',haveAccount:'Have an account? See all your shipments.',login:'Log in',loginTitle:'Log in',resultTitle:'Shipment status',lastUpdate:'Last update',history:'Status history',bannerText:'Log in to get notifications when your shipment status changes.',current:'Current',notFoundTitle:'Shipment not found',notFoundText:'Check the number and try again.',tryAgain:'Try again',emptyNum:'Please enter the shipment number.',loginSub:'Use the mobile number registered with us.',mobile:'Mobile number',password:'Password',show:'Show',hide:'Hide',forgot:'Forgot password?',loginErr:'The mobile number or password is not correct. Please try again.',mobileErr:'Please enter your mobile number.',pwErr:'Please enter your password.',forgotTitle:'Forgot password?',forgotText:'Please contact the administration to reset your password.',contactText:'We are happy to help. Call or message the administration.',adminNumber:'Administration number',call:'Call',whatsapp:'WhatsApp',tempTitle:'Choose a new password',changePwTitle:'Change password',tempText:'You are using a temporary password. Please choose a new one.',newPw:'New password',confirmPw:'Confirm new password',rule:'At least 8 characters',weak:'Weak',fair:'Okay',strong:'Strong',mismatch:'Passwords do not match.',savePw:'Save password',pwSaved:'Password updated',hello:'Hello, Ahmed',myShipments:'My shipments',searchPh:'Search by shipment number',all:'All',active:'Active',delivered:'Delivered',emptyTitle:'You have no shipments yet.',emptyText:'Shipments registered with your mobile number will appear here.',detailsTitle:'Shipment details',description:'Description',copy:'Copy',copied:'Shipment number copied',settingsTitle:'Settings',language:'Language',notifications:'Notifications',notifSub:'Alert me when a status changes',changePw:'Change password',contact:'Contact the administration',logout:'Log out',loggedOut:'You have logged out',tabShipments:'My shipments',tabSettings:'Settings',noInternetTitle:'No internet connection',noInternetText:'Check your connection and try again.',sessionTitle:'Your session has ended',sessionText:'For your security, please log in again.',errorTitle:'Something went wrong',errorText:'Please try again in a moment.',notifNow:'now',notifTitle:'Shipment AB7K2M9XQ4: In transit',notifBody:'Tap to see the details.',notifHint:'Tap the notification to open the shipment',lockDate:'Thursday, 8 October',calling:'Opening the phone app…',openingWa:'Opening WhatsApp…',loading:'Loading…',refreshing:'Updating…',backLabel:'Back',initial:'A',custName:'Ahmed Al-Otaibi'},
+ar:{label:'العربية · RTL',langSwitch:'English',homeTitle:'تتبع شحنتك',homeSub:'أدخل رقم الشحنة لمعرفة مكانها.',numLabel:'رقم الشحنة',numPh:'مثال: AB7K2M9XQ4',paste:'لصق',track:'تتبع',haveAccount:'لديك حساب؟ شاهد جميع شحناتك.',login:'تسجيل الدخول',loginTitle:'تسجيل الدخول',resultTitle:'حالة الشحنة',lastUpdate:'آخر تحديث',history:'سجل الحالات',bannerText:'سجّل الدخول لتصلك إشعارات عند تغيّر حالة شحنتك.',current:'الحالية',notFoundTitle:'لم يتم العثور على الشحنة',notFoundText:'تأكد من الرقم وحاول مرة أخرى.',tryAgain:'حاول مرة أخرى',emptyNum:'يرجى إدخال رقم الشحنة.',loginSub:'استخدم رقم الجوال المسجل لدينا.',mobile:'رقم الجوال',password:'كلمة المرور',show:'إظهار',hide:'إخفاء',forgot:'نسيت كلمة المرور؟',loginErr:'رقم الجوال أو كلمة المرور غير صحيحة. حاول مرة أخرى.',mobileErr:'يرجى إدخال رقم الجوال.',pwErr:'يرجى إدخال كلمة المرور.',forgotTitle:'نسيت كلمة المرور؟',forgotText:'يرجى التواصل مع الإدارة لإعادة تعيين كلمة المرور.',contactText:'يسعدنا مساعدتك. تواصل مع الإدارة بالاتصال أو عبر واتساب.',adminNumber:'رقم الإدارة',call:'اتصال',whatsapp:'واتساب',tempTitle:'اختر كلمة مرور جديدة',changePwTitle:'تغيير كلمة المرور',tempText:'أنت تستخدم كلمة مرور مؤقتة. يرجى اختيار كلمة مرور جديدة.',newPw:'كلمة المرور الجديدة',confirmPw:'تأكيد كلمة المرور',rule:'8 أحرف على الأقل',weak:'ضعيفة',fair:'مقبولة',strong:'قوية',mismatch:'كلمتا المرور غير متطابقتين.',savePw:'حفظ كلمة المرور',pwSaved:'تم تحديث كلمة المرور',hello:'مرحباً، أحمد',myShipments:'شحناتي',searchPh:'ابحث برقم الشحنة',all:'الكل',active:'النشطة',delivered:'المسلّمة',emptyTitle:'لا توجد لديك شحنات بعد.',emptyText:'ستظهر هنا الشحنات المسجلة برقم جوالك.',detailsTitle:'تفاصيل الشحنة',description:'الوصف',copy:'نسخ',copied:'تم نسخ رقم الشحنة',settingsTitle:'الإعدادات',language:'اللغة',notifications:'الإشعارات',notifSub:'نبّهني عند تغيّر الحالة',changePw:'تغيير كلمة المرور',contact:'التواصل مع الإدارة',logout:'تسجيل الخروج',loggedOut:'تم تسجيل الخروج',tabShipments:'شحناتي',tabSettings:'الإعدادات',noInternetTitle:'لا يوجد اتصال بالإنترنت',noInternetText:'تحقق من الاتصال وحاول مرة أخرى.',sessionTitle:'انتهت الجلسة',sessionText:'حفاظاً على أمانك، يرجى تسجيل الدخول مرة أخرى.',errorTitle:'حدث خطأ ما',errorText:'يرجى المحاولة مرة أخرى بعد قليل.',notifNow:'الآن',notifTitle:'الشحنة AB7K2M9XQ4: في الطريق',notifBody:'اضغط لعرض التفاصيل.',notifHint:'اضغط على الإشعار لفتح الشحنة',lockDate:'الخميس، 8 أكتوبر',calling:'جارٍ فتح تطبيق الاتصال…',openingWa:'جارٍ فتح واتساب…',loading:'جارٍ التحميل…',refreshing:'جارٍ التحديث…',backLabel:'رجوع',initial:'أ',custName:'أحمد العتيبي'}
+};
+const FLOWS=[
+{title:'Guest tracking',sub:'Home → number → result → Log in banner',steps:['1. Tap “Paste” (or type AB7K2M9XQ4)','2. Tap “Track”','3. Status, timeline and the Log in banner appear','Try any other number to see “not found”']},
+{title:'Log in → My shipments → Details',sub:'Customer account',steps:['1. Use “Fill demo login” below','2. Tap “Log in”','3. Tap a shipment card','Use the filter chips and the Settings tab']},
+{title:'Forgot password',sub:'Login → contact the administration',steps:['1. Tap “Forgot password?”','2. Tap Call or WhatsApp']},
+{title:'Language mirror',sub:'Arabic and English side by side',steps:['Back arrow, timeline rail, badges and icons swap sides','Tap through either phone; both follow','Shipment numbers and mobile numbers stay left-to-right']},
+{title:'Push notification',sub:'Lock screen → shipment details',steps:['1. Tap the notification','2. Shipment details open']}
+];
+const AR_FONT="'IBM Plex Sans Arabic', sans-serif", EN_FONT="'IBM Plex Sans', sans-serif";
+
+class Component extends DCLogic {
+  state={view:'ar',screen:'home',stack:[],query:'',qErr:false,loggedIn:false,sel:'AB7K2M9XQ4',filter:'all',mobile:'',pw:'',showPw:false,loginErr:'',np:'',cp:'',showNp:false,pwMode:'temp',contactMode:'forgot',notifOn:true,toast:null,emptyList:false,refreshing:false,flow:null};
+  componentWillUnmount(){clearTimeout(this.tt);clearTimeout(this.lt);clearTimeout(this.rt);}
+  toast(k){clearTimeout(this.tt);this.setState({toast:k});this.tt=setTimeout(()=>this.setState({toast:null}),2200);}
+  go(screen,extra){this.setState(s=>({stack:[...s.stack,s.screen],screen,qErr:false,loginErr:'',...(extra||{})}));}
+  reset(screen,extra){clearTimeout(this.lt);this.setState({stack:[],screen,qErr:false,loginErr:'',emptyList:false,refreshing:false,...(extra||{})});}
+  back(){this.setState(s=>{const st=s.stack.slice();let prev=st.pop()||(s.loggedIn?'list':'home');if(prev==='loading')prev=s.loggedIn?'list':'home';return {stack:st,screen:prev,qErr:false,loginErr:''};});}
+  loadThen(target,extra){clearTimeout(this.lt);this.setState(s=>({stack:[...s.stack,s.screen],screen:'loading'}));this.lt=setTimeout(()=>this.setState({screen:target,...(extra||{})}),650);}
+  track(){const q=this.state.query.trim().toUpperCase();if(!q){this.setState({qErr:true});return;}const f=SH.find(x=>x.no===q);if(f)this.loadThen(this.state.loggedIn?'details':'result',{sel:q,query:''});else this.loadThen('notFound');}
+  login(){const s=this.state;let m=s.mobile.replace(/\D/g,'');if(m.startsWith('966'))m=m.slice(3);if(m&&!m.startsWith('0'))m='0'+m;
+    if(!m){this.setState({loginErr:'mobileErr'});return;}
+    if(!s.pw){this.setState({loginErr:'pwErr'});return;}
+    if(m!=='0551234567'){this.setState({loginErr:'loginErr'});return;}
+    if(s.pw==='Temp1234'){this.reset('forceChange',{pwMode:'temp',np:'',cp:'',pw:''});return;}
+    this.setState({stack:[],screen:'loading',loggedIn:true,pw:'',loginErr:''});clearTimeout(this.lt);this.lt=setTimeout(()=>this.setState({screen:'list'}),650);}
+  savePw(){const s=this.state;if(s.np.length<8||s.np!==s.cp)return;if(s.pwMode==='temp'){this.reset('list',{loggedIn:true,np:'',cp:''});}else{this.back();this.setState({np:'',cp:''});}this.toast('pwSaved');}
+  startFlow(i){const v=this.state.view==='both'?'ar':this.state.view;
+    if(i===0)this.reset('home',{loggedIn:false,query:'',view:v});
+    if(i===1)this.reset('login',{stack:['home'],loggedIn:false,mobile:'',pw:'',view:v});
+    if(i===2)this.reset('login',{stack:['home'],loggedIn:false,view:v});
+    if(i===3)this.reset('details',{stack:['list'],loggedIn:true,sel:'AB7K2M9XQ4',view:'both'});
+    if(i===4)this.reset('notif',{loggedIn:true,view:v});
+    this.setState({flow:i});}
+  setStateKind(k){
+    if(k==='skeleton')this.reset('skeleton');
+    if(k==='empty')this.reset('list',{loggedIn:true,emptyList:true});
+    if(k==='notFound')this.reset('notFound',{stack:['home'],loggedIn:false});
+    if(k==='noInternet'||k==='session'||k==='error')this.reset(k);
+    if(k==='force')this.reset('forceChange',{pwMode:'temp',np:'',cp:''});
+    if(k==='refreshing'){this.reset('list',{loggedIn:true,refreshing:true});clearTimeout(this.rt);this.rt=setTimeout(()=>this.setState({refreshing:false}),1600);}
+  }
+  phone(l){
+    const s=this.state,t=T[l],rtl=l==='ar',sc=s.screen,P=this.props;
+    const pr=P.primaryColor||'#1D4F91';const c={primary:pr,soft:pr+'14'};
+    const isState=['notFound','noInternet','session','error'].includes(sc);
+    const tabsOn=s.loggedIn&&(sc==='list'||sc==='settings');
+    const S={home:sc==='home',hero:sc==='result'||sc==='details',login:sc==='login',forgot:sc==='forgot',force:sc==='forceChange',temp:s.pwMode==='temp',list:sc==='list',settings:sc==='settings',state:isState,loading:sc==='loading'||sc==='skeleton',notif:sc==='notif',tabs:tabsOn,banner:sc==='result'&&!s.loggedIn,empty:s.emptyList,header:['result','notFound','login','forgot','forceChange','details'].includes(sc),showBack:!(sc==='forceChange'&&s.pwMode==='temp')};
+    const titles={result:t.resultTitle,notFound:t.resultTitle,login:t.loginTitle,forgot:s.contactMode==='contact'?t.contact:t.forgotTitle,forceChange:s.pwMode==='temp'?t.tempTitle:t.changePwTitle,details:t.detailsTitle};
+    const shp=SH.find(x=>x.no===s.sel)||SH[0],st=ST[shp.status],tn=TONES[st.tone];
+    const tl=shp.tl.slice().reverse().map((e,i,a)=>{const es=ST[e.s],et=TONES[es.tone],cur=i===0;return {name:es[l],date:e.d[l],note:e.n?e.n[l]:'',hasNote:!!e.n,current:cur,curLabel:t.current,curBg:et.bg,curFg:et.fg,dotBg:cur?et.solid:'#F2F4F7',icon:ic(es.icon,18,cur?'#fff':'#98A2B3'),color:cur?'#101828':'#475467',weight:cur?700:500,line:i===a.length-1?'transparent':'#E4E7EC'};});
+    const sh={no:shp.no,desc:shp[l],name:st[l],bg:tn.bg,fg:tn.fg,icon:ic(st.icon,28,tn.fg),last:shp.last[l],showDesc:s.loggedIn&&sc==='details',tl};
+    let arr=SH;if(s.filter==='active')arr=SH.filter(x=>!ST[x.status].final);if(s.filter==='delivered')arr=SH.filter(x=>x.status==='delivered');if(s.emptyList)arr=[];
+    const list=arr.map(x=>{const xs=ST[x.status],xt=TONES[xs.tone];return {no:x.no,desc:x[l],name:xs[l],bg:xt.bg,fg:xt.fg,icon:ic(xs.icon,18,xt.fg),last:x.last[l],open:()=>this.go('details',{sel:x.no})};});
+    const chips=['all','active','delivered'].map(k=>{const on=s.filter===k;return {label:t[k],bg:on?pr:'#fff',fg:on?'#fff':'#344054',border:on?pr:'#D0D5DD',onClick:()=>this.setState({filter:k})};});
+    const np=s.np;let lvl=0;if(np.length>0)lvl=1;if(np.length>=8&&/\d/.test(np))lvl=2;if(np.length>=10&&/\d/.test(np)&&/[A-Z]/.test(np))lvl=3;
+    const lc=['#E4E7EC','#D92D20','#E08A0B','#16A34A'][lvl];
+    const pwValid=np.length>=8&&np===s.cp;
+    const stInfo={notFound:{icon:'searchX',title:t.notFoundTitle,text:t.notFoundText,btn:t.tryAgain,action:()=>this.back()},noInternet:{icon:'wifiOff',title:t.noInternetTitle,text:t.noInternetText,btn:t.tryAgain,action:()=>this.reset(s.loggedIn?'list':'home')},session:{icon:'clock',title:t.sessionTitle,text:t.sessionText,btn:t.login,action:()=>this.reset('login',{loggedIn:false,stack:['home']})},error:{icon:'alert',title:t.errorTitle,text:t.errorText,btn:t.tryAgain,action:()=>this.reset(s.loggedIn?'list':'home')}}[sc];
+    const tabBtn=(k,icon,label)=>{const on=sc===k;return {icon:ic(icon,24,on?pr:'#667085'),label,color:on?pr:'#667085',onClick:()=>this.reset(k,{loggedIn:true,toast:s.toast})};};
+    return {
+      lang:l,dir:rtl?'rtl':'ltr',font:rtl?AR_FONT:EN_FONT,altFont:rtl?EN_FONT:AR_FONT,label:t.label,t,c,s:S,w:(P.phoneWidth||360)+'px',
+      brand:rtl?(P.brandAr||'تتبع الشحنات'):(P.brandEn||'Shipment Tracker'),
+      align:rtl?'right':'left',headerTitle:titles[sc]||'',sh,list,chips,skel:[1,2,3],
+      i:{logo:ic('package',22,'#fff'),logoSm:ic('package',14,'#fff',2.4),globe:ic('globe',20,'#101828'),paste:ic('paste',20,pr),searchW:ic('search',22,'#fff'),search:ic('search',20,'#667085'),back:ic(rtl?'chevR':'chevL',26,'#101828'),fwd:ic(rtl?'chevL':'chevR',20,'#98A2B3'),copy:ic('copy',20,pr),bell:ic('bell',24,pr),eye:ic(s.showPw?'eyeOff':'eye',22,'#475467'),eyeNp:ic(s.showNp?'eyeOff':'eye',22,'#475467'),alertRed:ic('alert',20,'#B42318'),contactBig:ic(s.contactMode==='contact'?'phone':'lock',34,pr),phoneW:ic('phone',22,'#fff'),chat:ic('chat',22,'#101828'),infoAmber:ic('info',22,'#B54708'),pkgBig:ic('package',36,'#98A2B3'),globeRow:ic('globe',22,'#475467'),bellRow:ic('bell',22,'#475467'),lockRow:ic('lock',22,'#475467'),phoneRow:ic('phone',22,'#475467'),logout:ic('logout',22,'#B42318'),refresh:ic('refresh',20,pr),checkW:ic('check',20,'#fff'),wifi:ic('wifi',17,'currentColor',2.2)},
+      query:s.query,qErr:s.qErr,qBorder:s.qErr?'#D92D20':(s.query?pr:'#D0D5DD'),hasQuery:!!s.query,
+      onQuery:e=>this.setState({query:e.target.value.toUpperCase().replace(/\s/g,'').slice(0,12),qErr:false}),
+      onQueryKey:e=>{if(e.key==='Enter')this.track();},onTrack:()=>this.track(),
+      onPaste:()=>this.setState({query:'AB7K2M9XQ4',qErr:false}),
+      toggleLang:()=>this.setState({view:rtl?'en':'ar'}),
+      goLogin:()=>this.go('login',{loginErr:''}),back:()=>this.back(),
+      onCopy:()=>this.toast('copied'),
+      mobile:s.mobile,pw:s.pw,pwType:s.showPw?'text':'password',pwToggleLabel:s.showPw?t.hide:t.show,
+      mBorder:(s.loginErr==='mobileErr'||s.loginErr==='loginErr')?'#D92D20':'#D0D5DD',pBorder:(s.loginErr==='pwErr'||s.loginErr==='loginErr')?'#D92D20':'#D0D5DD',
+      hasLoginErr:!!s.loginErr,loginErrText:s.loginErr?t[s.loginErr]:'',
+      onMobile:e=>this.setState({mobile:e.target.value.replace(/[^\d+ ]/g,'').slice(0,14),loginErr:''}),
+      onPw:e=>this.setState({pw:e.target.value,loginErr:''}),onLoginKey:e=>{if(e.key==='Enter')this.login();},
+      togglePw:()=>this.setState({showPw:!s.showPw}),onLogin:()=>this.login(),
+      goForgot:()=>this.go('forgot',{contactMode:'forgot'}),contactText:s.contactMode==='contact'?t.contactText:t.forgotText,
+      onCall:()=>this.toast('calling'),onWa:()=>this.toast('openingWa'),
+      np:s.np,cp:s.cp,npType:s.showNp?'text':'password',npToggleLabel:s.showNp?t.hide:t.show,toggleNp:()=>this.setState({showNp:!s.showNp}),
+      onNp:e=>this.setState({np:e.target.value}),onCp:e=>this.setState({cp:e.target.value}),
+      str:{c1:lvl>=1?lc:'#E4E7EC',c2:lvl>=2?lc:'#E4E7EC',c3:lvl>=3?lc:'#E4E7EC',label:['',t.weak,t.fair,t.strong][lvl],color:lc},
+      mismatch:!!s.cp&&s.cp!==np,cpBorder:(!!s.cp&&s.cp!==np)?'#D92D20':'#D0D5DD',saveOpacity:pwValid?1:0.45,onSavePw:()=>this.savePw(),
+      refreshing:s.refreshing,
+      langSeg:[['ar','العربية',AR_FONT],['en','English',EN_FONT]].map(([k,lab,f])=>{const on=l===k;return {label:lab,font:f,bg:on?'#fff':'transparent',fg:on?'#101828':'#475467',shadow:on?'0 1px 3px rgba(16,24,40,0.12)':'none',onClick:()=>this.setState({view:k})};}),
+      sw:{track:s.notifOn?pr:'#D0D5DD',justify:s.notifOn?'flex-end':'flex-start'},toggleNotif:()=>this.setState({notifOn:!s.notifOn}),
+      goChangePw:()=>this.go('forceChange',{pwMode:'change',np:'',cp:''}),goContact:()=>this.go('forgot',{contactMode:'contact'}),
+      onLogout:()=>{this.reset('home',{loggedIn:false,query:''});this.toast('loggedOut');},
+      st:stInfo?{...stInfo,icon:ic(stInfo.icon,36,'#475467')}:{},
+      openNotif:()=>this.reset('details',{loggedIn:true,sel:'AB7K2M9XQ4',stack:['list']}),
+      tabs:[tabBtn('list','package',t.tabShipments),tabBtn('settings','sliders',t.tabSettings)],
+      sbColor:sc==='notif'?'#fff':'#101828',hiBg:sc==='notif'?'#1D2939':(tabsOn?'#fff':'#F6F7F9'),hiColor:sc==='notif'?'#fff':'#101828',
+      hasToast:!!s.toast,toastText:s.toast?t[s.toast]:'',toastBottom:tabsOn?'110px':'48px'
+    };
+  }
+  renderVals(){
+    const s=this.state,P=this.props,pr=P.primaryColor||'#1D4F91';
+    const langs=s.view==='both'?['ar','en']:[s.view];
+    return {
+      primary:pr,brandEn:P.brandEn||'Shipment Tracker',logoIcon:ic('package',20,'#fff'),
+      phones:langs.map(l=>this.phone(l)),
+      viewBtns:[['ar','العربية — Arabic (RTL)'],['en','English (LTR)'],['both','Side by side — mirror']].map(([k,label])=>{const on=s.view===k;return {label,bg:on?'#101828':'#fff',fg:on?'#fff':'#101828',border:on?'#101828':'#D0D5DD',onClick:()=>this.setState({view:k})};}),
+      flows:FLOWS.map((f,i)=>{const on=s.flow===i;return {...f,n:i+1,active:on,bg:on?pr+'0F':'#fff',border:on?pr:'#EAECF0',numBg:on?pr:'#F2F4F7',numFg:on?'#fff':'#344054',onClick:()=>this.startFlow(i)};}),
+      states:[['skeleton','Loading'],['empty','Empty list'],['notFound','Not found'],['noInternet','No internet'],['session','Session expired'],['error','Error'],['refreshing','Pull to refresh'],['force','Temporary password']].map(([k,label])=>({label,onClick:()=>this.setStateKind(k)})),
+      showDemo:s.screen==='login',
+      fillDemo:()=>this.setState({mobile:'0551234567',pw:'demo1234',loginErr:''}),
+      fillTemp:()=>this.setState({mobile:'0551234567',pw:'Temp1234',loginErr:''}),
+      restart:()=>this.reset('home',{loggedIn:false,query:'',flow:null,view:'ar',filter:'all',mobile:'',pw:''})
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#F6F7F9}a{color:#1D4F91;text-decoration:none}a:hover{color:#163D70}</style>
+</helmet>
+<div style="min-height:100vh;background:#F6F7F9;font-family:'IBM Plex Sans',sans-serif;color:#101828">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 32px;background:#fff;border-bottom:1px solid #E4E7EC">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:36px;height:36px;border-radius:10px;background:#1D4F91;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5z"></path><path d="M3 8l9 5 9-5"></path><path d="M12 13v8"></path></svg></div>
+      <div style="display:flex;flex-direction:column">
+        <span style="font-size:16px;font-weight:700">Shipment Tracker · Design system &amp; inventory</span>
+        <span style="font-size:13px;color:#667085">Tokens, components and build checklist for React Native</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a href="Mobile%20App.dc.html" style="height:40px;padding:0 16px;border-radius:10px;border:1px solid #D0D5DD;color:#101828;display:flex;align-items:center;font-size:14px;font-weight:600">Customer app</a>
+      <a href="Admin%20Dashboard.dc.html" style="height:40px;padding:0 16px;border-radius:10px;border:1px solid #D0D5DD;color:#101828;display:flex;align-items:center;font-size:14px;font-weight:600">Admin dashboard</a>
+      <a href="Design%20System.dc.html" style="height:40px;padding:0 16px;border-radius:10px;background:#101828;color:#fff;display:flex;align-items:center;font-size:14px;font-weight:600">Design system &amp; inventory</a>
+    </div>
+  </div>
+
+  <div style="max-width:1200px;margin:0 auto;padding:40px 32px 80px;display:flex;flex-direction:column;gap:56px">
+
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <h1 style="margin:0;font-size:32px;font-weight:700">1. Design tokens</h1>
+      <p style="margin:0;font-size:16px;line-height:26px;color:#475467;max-width:760px">Every value below maps 1:1 to a key in the React Native theme object (section 3). To rebrand, change <b>brand.name</b>, <b>brand.logo</b> and <b>color.primary</b>; everything else stays.</p>
+
+      <h2 style="margin:12px 0 0;font-size:18px;font-weight:700">Brand (placeholder, replaceable)</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px">
+        <sc-for list="{{ brandColors }}" as="c" hint-placeholder-count="4">
+          <div style="background:#fff;border:1px solid #EAECF0;border-radius:14px;overflow:hidden">
+            <div style="height:72px;background:{{ c.hex }};border-bottom:1px solid #EAECF0"></div>
+            <div style="padding:10px 12px;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">{{ c.name }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#667085">{{ c.hex }}</span><span style="font-size:12px;color:#667085">{{ c.use }}</span></div>
+          </div>
+        </sc-for>
+      </div>
+
+      <h2 style="margin:12px 0 0;font-size:18px;font-weight:700">Neutrals</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px">
+        <sc-for list="{{ neutrals }}" as="c" hint-placeholder-count="8">
+          <div style="background:#fff;border:1px solid #EAECF0;border-radius:14px;overflow:hidden">
+            <div style="height:56px;background:{{ c.hex }};border-bottom:1px solid #EAECF0"></div>
+            <div style="padding:10px 12px;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">{{ c.name }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#667085">{{ c.hex }}</span><span style="font-size:12px;color:#667085">{{ c.use }}</span></div>
+          </div>
+        </sc-for>
+      </div>
+
+      <h2 style="margin:12px 0 0;font-size:18px;font-weight:700">Status color palette</h2>
+      <p style="margin:0;font-size:15px;line-height:24px;color:#475467;max-width:760px">Statuses are created by the admin. The app never hardcodes a status: each status record carries <b>nameAr</b>, <b>nameEn</b>, <b>tone</b> (one of the six below), <b>icon</b>, <b>isFinal</b> and <b>sendPush</b>. The badge reads its colors from the tone.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px">
+        <sc-for list="{{ tones }}" as="c" hint-placeholder-count="6">
+          <div style="background:#fff;border:1px solid #EAECF0;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px">
+            <span style="align-self:flex-start;display:flex;align-items:center;gap:6px;min-height:30px;padding:2px 12px;border-radius:15px;background:{{ c.bg }};color:{{ c.fg }};font-size:15px;font-weight:600">{{ c.example }}</span>
+            <div style="display:flex;gap:6px"><span style="width:28px;height:28px;border-radius:8px;background:{{ c.fg }}"></span><span style="width:28px;height:28px;border-radius:8px;background:{{ c.bg }};border:1px solid #EAECF0"></span><span style="width:28px;height:28px;border-radius:8px;background:{{ c.solid }}"></span></div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#475467;line-height:18px">{{ c.key }} · fg {{ c.fg }}<br>bg {{ c.bg }} · solid {{ c.solid }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <h2 style="margin:12px 0 0;font-size:18px;font-weight:700">Typography</h2>
+      <p style="margin:0;font-size:15px;color:#475467">Arabic: IBM Plex Sans Arabic · English: IBM Plex Sans · Codes and numbers: IBM Plex Mono. Western digits (0–9) in both languages. Body never below 16.</p>
+      <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;overflow:hidden">
+        <sc-for list="{{ type }}" as="ty" hint-placeholder-count="7">
+          <div style="display:grid;grid-template-columns:150px minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:center;padding:16px 20px;border-top:1px solid #F2F4F7">
+            <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">{{ ty.name }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#667085">{{ ty.spec }}</span></div>
+            <span dir="rtl" style="font-family:'IBM Plex Sans Arabic',sans-serif;font-size:{{ ty.size }};line-height:{{ ty.lh }};font-weight:{{ ty.w }}">{{ ty.ar }}</span>
+            <span style="font-size:{{ ty.size }};line-height:{{ ty.lh }};font-weight:{{ ty.w }}">{{ ty.en }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px">
+        <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px">
+          <h2 style="margin:0;font-size:18px;font-weight:700">Spacing (8px grid)</h2>
+          <sc-for list="{{ spacing }}" as="sp" hint-placeholder-count="7">
+            <div style="display:flex;align-items:center;gap:12px"><span style="width:84px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#475467">{{ sp.key }}</span><span style="height:16px;width:{{ sp.px }};background:#1D4F91;border-radius:3px"></span><span style="font-size:13px;color:#667085">{{ sp.px }}</span></div>
+          </sc-for>
+        </div>
+        <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px">
+          <h2 style="margin:0;font-size:18px;font-weight:700">Radius &amp; elevation</h2>
+          <div style="display:flex;gap:16px;flex-wrap:wrap">
+            <sc-for list="{{ radii }}" as="r" hint-placeholder-count="5">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><span style="width:64px;height:64px;background:#EAF2FD;border:2px solid #2E6FD9;border-radius:{{ r.px }}"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#475467">{{ r.key }} {{ r.px }}</span></div>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;padding-top:8px">
+            <div style="width:120px;height:64px;border-radius:16px;background:#fff;border:1px solid #EAECF0;box-shadow:0 1px 3px rgba(16,24,40,0.06);display:flex;align-items:center;justify-content:center;font-size:13px;color:#475467">shadow.card</div>
+            <div style="width:120px;height:64px;border-radius:16px;background:#fff;box-shadow:0 8px 24px rgba(16,24,40,0.16);display:flex;align-items:center;justify-content:center;font-size:13px;color:#475467">shadow.overlay</div>
+          </div>
+          <span style="font-size:13px;color:#667085;line-height:20px">Tap targets: 48px minimum (mobile). Buttons 56px, inputs 56px, list rows 64px.</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <h1 style="margin:0;font-size:32px;font-weight:700">2. Component library</h1>
+      <p style="margin:0;font-size:16px;line-height:26px;color:#475467;max-width:760px">Ten reusable components cover every customer screen. All are built from View, Text, TextInput, Pressable, FlatList and Switch. Layout uses start/end, never left/right, so RTL mirrors automatically.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px">
+        <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-size:13px;font-weight:700;letter-spacing:0.6px;color:#667085">BUTTON · primary / secondary / text</span>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:10px 14px;align-items:center">
+            <span style="font-size:13px;color:#667085">Default</span><div style="height:56px;border-radius:14px;background:#1D4F91;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600">Track</div>
+            <span style="font-size:13px;color:#667085">Pressed</span><div style="height:56px;border-radius:14px;background:#1D4F91;opacity:0.85;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600">Track</div>
+            <span style="font-size:13px;color:#667085">Disabled</span><div style="height:56px;border-radius:14px;background:#1D4F91;opacity:0.45;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600">Save password</div>
+            <span style="font-size:13px;color:#667085">Secondary</span><div style="height:56px;border-radius:14px;border:1.5px solid #D0D5DD;background:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">Log in</div>
+            <span style="font-size:13px;color:#667085">Sec. pressed</span><div style="height:56px;border-radius:14px;border:1.5px solid #D0D5DD;background:#F2F4F7;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">Log in</div>
+            <span style="font-size:13px;color:#667085">Text</span><div style="height:48px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;color:#1D4F91;text-decoration:underline">Forgot password?</div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-size:13px;font-weight:700;letter-spacing:0.6px;color:#667085">TEXT INPUT · default / focused / error / disabled</span>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:15px;font-weight:600;color:#344054">Mobile number</span><div style="height:56px;border-radius:14px;border:1.5px solid #D0D5DD;background:#fff;display:flex;align-items:center;padding:0 16px;font-size:18px;color:#98A2B3">05XXXXXXXX</div></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:15px;font-weight:600;color:#344054">Shipment number</span><div style="height:56px;border-radius:14px;border:2px solid #1D4F91;background:#fff;display:flex;align-items:center;padding:0 16px;font-family:'IBM Plex Mono',monospace;font-size:18px">AB7K2M9XQ4</div></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:15px;font-weight:600;color:#344054">Password</span><div style="height:56px;border-radius:14px;border:1.5px solid #D92D20;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-size:18px"><span>••••••</span><span style="font-size:15px;font-weight:600;color:#475467">Show</span></div><span style="font-size:15px;color:#B42318">Please enter your password.</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:15px;font-weight:600;color:#98A2B3">Disabled</span><div style="height:56px;border-radius:14px;border:1.5px solid #EAECF0;background:#F2F4F7;display:flex;align-items:center;padding:0 16px;font-size:18px;color:#98A2B3">0551234567</div></div>
+        </div>
+
+        <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-size:13px;font-weight:700;letter-spacing:0.6px;color:#667085">STATUS BADGE · sm (list) / lg (hero) · any name length</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <sc-for list="{{ tones }}" as="c" hint-placeholder-count="6"><span style="display:flex;align-items:center;min-height:32px;padding:2px 12px;border-radius:16px;background:{{ c.bg }};color:{{ c.fg }};font-size:15px;font-weight:600">{{ c.example }}</span></sc-for>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap" dir="rtl">
+            <sc-for list="{{ tones }}" as="c" hint-placeholder-count="6"><span style="display:flex;align-items:center;min-height:32px;padding:2px 12px;border-radius:16px;background:{{ c.bg }};color:{{ c.fg }};font-size:15px;font-weight:600;font-family:'IBM Plex Sans Arabic',sans-serif">{{ c.exampleAr }}</span></sc-for>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:16px;border-radius:16px;background:#FEF3E2">
+            <div style="width:52px;height:52px;border-radius:26px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B54708" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h12v10H2z"></path><path d="M14 9h4l4 4v3h-8"></path><path d="M6 19.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path><path d="M18 19.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg></div>
+            <div style="display:flex;flex-direction:column"><span style="font-size:24px;line-height:32px;font-weight:700;color:#B54708">In transit</span><span style="font-size:15px;color:#344054">Last update: Today 10:30</span></div>
+          </div>
+          <div style="align-self:flex-start;max-width:240px;display:flex;align-items:center;min-height:32px;padding:4px 12px;border-radius:16px;background:#F2EEFC;color:#6941C6;font-size:15px;font-weight:600;line-height:20px">Waiting for customs clearance at the port</div>
+          <span style="font-size:13px;color:#667085">Long names wrap; the badge grows in height, never truncates.</span>
+        </div>
+
+        <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-size:13px;font-weight:700;letter-spacing:0.6px;color:#667085">SHIPMENT CARD · default / pressed · AR + EN</span>
+          <div dir="rtl" style="background:#fff;border:1px solid #EAECF0;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px;font-family:'IBM Plex Sans Arabic',sans-serif;box-shadow:0 1px 2px rgba(16,24,40,0.05)">
+            <div style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;flex-direction:column;align-items:flex-start;gap:2px"><span dir="ltr" style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">AB7K2M9XQ4</span><span style="font-size:16px;color:#475467">قطع غيار سيارات</span></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"></path></svg></div>
+            <div style="display:flex;align-items:center;justify-content:space-between"><span style="display:flex;align-items:center;min-height:32px;padding:0 12px;border-radius:16px;background:#FEF3E2;color:#B54708;font-size:15px;font-weight:600">في الطريق</span><span style="font-size:14px;color:#667085">اليوم 10:30</span></div>
+          </div>
+          <div style="background:#F9FAFB;border:1px solid #EAECF0;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">KP3N8T5WZ2</span><span style="font-size:16px;color:#475467">Electronics</span></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"></path></svg></div>
+            <div style="display:flex;align-items:center;justify-content:space-between"><span style="display:flex;align-items:center;min-height:32px;padding:0 12px;border-radius:16px;background:#E7F6EC;color:#067647;font-size:15px;font-weight:600">Delivered</span><span style="font-size:14px;color:#667085">Yesterday · pressed</span></div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-size:13px;font-weight:700;letter-spacing:0.6px;color:#667085">TIMELINE ITEM · current / past / with note · mirrors in RTL</span>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div dir="rtl" style="display:flex;flex-direction:column;font-family:'IBM Plex Sans Arabic',sans-serif">
+              <div style="display:flex;gap:10px"><div style="display:flex;flex-direction:column;align-items:center"><span style="width:32px;height:32px;border-radius:16px;background:#E08A0B"></span><span style="flex:1;width:2px;background:#E4E7EC;margin:4px 0;min-height:16px"></span></div><div style="display:flex;flex-direction:column;padding-bottom:16px"><span style="font-size:16px;font-weight:700">في الطريق</span><span style="font-size:14px;color:#667085">اليوم · 10:30</span></div></div>
+              <div style="display:flex;gap:10px"><div style="display:flex;flex-direction:column;align-items:center"><span style="width:32px;height:32px;border-radius:16px;background:#F2F4F7"></span></div><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:500;color:#475467">تم الاستلام</span><span style="font-size:14px;color:#667085">5 أكتوبر · 09:15</span><span style="font-size:14px;background:#F6F7F9;border-radius:8px;padding:6px 10px;margin-top:4px">غادرت المستودع</span></div></div>
+            </div>
+            <div style="display:flex;flex-direction:column">
+              <div style="display:flex;gap:10px"><div style="display:flex;flex-direction:column;align-items:center"><span style="width:32px;height:32px;border-radius:16px;background:#E08A0B"></span><span style="flex:1;width:2px;background:#E4E7EC;margin:4px 0;min-height:16px"></span></div><div style="display:flex;flex-direction:column;padding-bottom:16px"><span style="font-size:16px;font-weight:700">In transit</span><span style="font-size:14px;color:#667085">Today · 10:30</span></div></div>
+              <div style="display:flex;gap:10px"><div style="display:flex;flex-direction:column;align-items:center"><span style="width:32px;height:32px;border-radius:16px;background:#F2F4F7"></span></div><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:500;color:#475467">Received</span><span style="font-size:14px;color:#667085">5 Oct · 09:15</span><span style="font-size:14px;background:#F6F7F9;border-radius:8px;padding:6px 10px;margin-top:4px">Left the warehouse</span></div></div>
+            </div>
+          </div>
+          <span style="font-size:13px;color:#667085">Newest first. Current item: status solid color + bold. Earlier items: gray dot, regular weight.</span>
+        </div>
+
+        <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-size:13px;font-weight:700;letter-spacing:0.6px;color:#667085">SUPPORTING · chip · switch · banner · toast · tab bar</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><span style="height:44px;padding:0 18px;border-radius:22px;background:#1D4F91;color:#fff;display:flex;align-items:center;font-size:15px;font-weight:600">All · selected</span><span style="height:44px;padding:0 18px;border-radius:22px;border:1.5px solid #D0D5DD;display:flex;align-items:center;font-size:15px;font-weight:600;color:#344054">Active</span></div>
+          <div style="display:flex;gap:16px;align-items:center"><span style="width:52px;height:32px;border-radius:16px;background:#1D4F91;padding:2px;box-sizing:border-box;display:flex;justify-content:flex-end"><span style="width:28px;height:28px;border-radius:14px;background:#fff"></span></span><span style="font-size:14px;color:#475467">On</span><span style="width:52px;height:32px;border-radius:16px;background:#D0D5DD;padding:2px;box-sizing:border-box;display:flex"><span style="width:28px;height:28px;border-radius:14px;background:#fff"></span></span><span style="font-size:14px;color:#475467">Off (RN Switch)</span></div>
+          <div style="padding:14px 16px;border-radius:16px;background:#1D4F9114;font-size:15px;line-height:22px">Log in to get notifications when your shipment status changes.</div>
+          <div style="align-self:center;display:flex;align-items:center;gap:10px;background:#101828;color:#fff;border-radius:14px;padding:12px 16px;font-size:15px">Shipment number copied</div>
+          <div style="height:64px;border:1px solid #EAECF0;border-radius:12px;display:flex"><span style="flex:1;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#1D4F91">My shipments</span><span style="flex:1;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#667085">Settings</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <h1 style="margin:0;font-size:32px;font-weight:700">3. React Native theme object</h1>
+      <pre style="margin:0;background:#101828;color:#E4E7EC;border-radius:16px;padding:24px;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:21px;overflow-x:auto;white-space:pre">{{ themeCode }}</pre>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <h1 style="margin:0;font-size:32px;font-weight:700">4. Screen inventory · build checklist</h1>
+      <sc-for list="{{ inventory }}" as="g" hint-placeholder-count="2">
+        <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;overflow:hidden">
+          <div style="padding:16px 20px;font-size:18px;font-weight:700;border-bottom:1px solid #EAECF0">{{ g.title }}</div>
+          <div style="display:grid;grid-template-columns:60px minmax(160px,1fr) minmax(200px,1.4fr) minmax(200px,1.4fr);gap:16px;padding:10px 20px;background:#F9FAFB;font-size:13px;font-weight:600;color:#475467"><span>ID</span><span>Screen</span><span>States</span><span>Components</span></div>
+          <sc-for list="{{ g.items }}" as="it">
+            <div style="display:grid;grid-template-columns:60px minmax(160px,1fr) minmax(200px,1.4fr) minmax(200px,1.4fr);gap:16px;padding:12px 20px;border-top:1px solid #F2F4F7;font-size:14px;line-height:20px;align-items:start">
+              <span style="font-family:'IBM Plex Mono',monospace;font-weight:600;color:#475467">{{ it.id }}</span>
+              <span style="font-weight:600">{{ it.name }}</span>
+              <span style="color:#344054">{{ it.states }}</span>
+              <span style="color:#475467">{{ it.comps }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+      <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:18px;font-weight:700">Components to build</span>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px 20px">
+          <sc-for list="{{ compList }}" as="cp" hint-placeholder-count="12"><span style="font-size:14px;line-height:22px;color:#344054"><b>{{ cp.name }}</b> — {{ cp.desc }}</span></sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <h1 style="margin:0;font-size:32px;font-weight:700">5. Assumptions made</h1>
+      <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:8px 20px">
+        <sc-for list="{{ assumptions }}" as="a" hint-placeholder-count="8">
+          <div style="display:flex;gap:12px;padding:12px 0;border-top:1px solid #F2F4F7;font-size:15px;line-height:23px"><span style="font-family:'IBM Plex Mono',monospace;color:#98A2B3;width:24px;flex-shrink:0">{{ a.n }}</span><span>{{ a.text }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals(){
+    const tones=[['blue','#175CD3','#EAF2FD','#2E6FD9','Received','تم الاستلام'],['amber','#B54708','#FEF3E2','#E08A0B','In transit','في الطريق'],['green','#067647','#E7F6EC','#16A34A','Delivered','تم التسليم'],['red','#B42318','#FDECEA','#D92D20','Returned','مرتجع'],['purple','#6941C6','#F2EEFC','#7F56D9','Customs','الجمارك'],['gray','#475467','#F1F3F5','#98A2B3','Cancelled','ملغي']].map(([key,fg,bg,solid,example,exampleAr])=>({key,fg,bg,solid,example,exampleAr}));
+    const S=(id,name,states,comps)=>({id,name,states,comps});
+    return {
+      brandColors:[{name:'primary',hex:'#1D4F91',use:'Buttons, links, active tab'},{name:'primarySoft',hex:'#EDF1F7',use:'primary at 8% — banners, copy'},{name:'onPrimary',hex:'#FFFFFF',use:'Text on primary'},{name:'danger',hex:'#B42318',use:'Errors, log out'}],
+      neutrals:[['ink','#101828','Headings, body'],['text2','#344054','Labels'],['text3','#475467','Secondary text'],['muted','#667085','Meta, dates'],['placeholder','#98A2B3','Placeholders'],['border','#D0D5DD','Inputs'],['divider','#EAECF0','Card borders'],['canvas','#F6F7F9','Screen background'],['surface','#FFFFFF','Cards']].map(([name,hex,use])=>({name,hex,use})),
+      tones,
+      type:[['display','28 / 38 · 700','28px','38px',700,'تتبع شحنتك','Track your shipment'],['title','24 / 32 · 700','24px','32px',700,'في الطريق','In transit'],['heading','18 / 26 · 700','18px','26px',700,'سجل الحالات','Status history'],['bodyLg','17 / 24 · 600','17px','24px',600,'تسجيل الدخول','Log in'],['body','16 / 24 · 400','16px','24px',400,'أدخل رقم الشحنة لمعرفة مكانها.','Enter the shipment number to see where it is.'],['meta','14 / 20 · 400','14px','20px',400,'اليوم 10:30','Today 10:30'],['code (mono)','19 / 24 · 600','19px','24px',600,'AB7K2M9XQ4','AB7K2M9XQ4']].map(([name,spec,size,lh,w,ar,en])=>({name,spec,size,lh,w,ar,en})),
+      spacing:[['space.xs','4px'],['space.sm','8px'],['space.md','12px'],['space.lg','16px'],['space.xl','24px'],['space.2xl','32px'],['space.3xl','48px']].map(([key,px])=>({key,px})),
+      radii:[['sm','8px'],['md','12px'],['lg','16px'],['xl','20px'],['pill','999px']].map(([key,px])=>({key,px:px==='999px'?'32px':px})),
+      themeCode:`export const theme = {
+  brand: { nameAr: 'تتبع الشحنات', nameEn: 'Shipment Tracker', logo: require('./assets/logo.png') },
+  color: {
+    primary: '#1D4F91', primarySoft: 'rgba(29,79,145,0.08)', onPrimary: '#FFFFFF', danger: '#B42318',
+    ink: '#101828', text2: '#344054', text3: '#475467', muted: '#667085', placeholder: '#98A2B3',
+    border: '#D0D5DD', divider: '#EAECF0', canvas: '#F6F7F9', surface: '#FFFFFF',
+  },
+  // Status tones — the admin picks one per status. Never map by status name.
+  tone: {
+    blue:   { fg: '#175CD3', bg: '#EAF2FD', solid: '#2E6FD9' },
+    amber:  { fg: '#B54708', bg: '#FEF3E2', solid: '#E08A0B' },
+    green:  { fg: '#067647', bg: '#E7F6EC', solid: '#16A34A' },
+    red:    { fg: '#B42318', bg: '#FDECEA', solid: '#D92D20' },
+    purple: { fg: '#6941C6', bg: '#F2EEFC', solid: '#7F56D9' },
+    gray:   { fg: '#475467', bg: '#F1F3F5', solid: '#98A2B3' },
+  },
+  font: { ar: 'IBMPlexSansArabic', en: 'IBMPlexSans', mono: 'IBMPlexMono' },
+  type: {
+    display: { fontSize: 28, lineHeight: 38, fontWeight: '700' },
+    title:   { fontSize: 24, lineHeight: 32, fontWeight: '700' },
+    heading: { fontSize: 18, lineHeight: 26, fontWeight: '700' },
+    bodyLg:  { fontSize: 17, lineHeight: 24, fontWeight: '600' },
+    body:    { fontSize: 16, lineHeight: 24, fontWeight: '400' },
+    meta:    { fontSize: 14, lineHeight: 20, fontWeight: '400' },
+    code:    { fontSize: 19, lineHeight: 24, fontWeight: '600' },
+  },
+  space: { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, '2xl': 32, '3xl': 48 },
+  radius: { sm: 8, md: 12, lg: 16, xl: 20, pill: 999 },
+  size: { tapMin: 48, button: 56, input: 56, row: 64, tabBar: 64 },
+  shadow: {
+    card:    { shadowColor: '#101828', shadowOpacity: 0.06, shadowRadius: 3, shadowOffset: { width: 0, height: 1 }, elevation: 1 },
+    overlay: { shadowColor: '#101828', shadowOpacity: 0.16, shadowRadius: 24, shadowOffset: { width: 0, height: 8 }, elevation: 8 },
+  },
+};
+
+// Status record from the API (admin-managed)
+// { id, nameAr, nameEn, tone: 'amber', icon: 'truck', isFinal: false, sendPush: true, order: 2, active: true }`,
+      inventory:[
+        {title:'Customer mobile app (React Native) — every screen in AR (RTL) and EN (LTR)',items:[
+          S('M01','Home / Search (guest)','Default, typing, empty-input error, loading','Logo, Language button, TextInput + Paste, Button primary, Button secondary'),
+          S('M02','Search result (guest)','Loaded, loading skeleton, not found','Header, Hero status badge, Copy button, Login banner, Timeline'),
+          S('M03','Login','Default, show/hide password, missing field, wrong credentials','Header, TextInput (tel, password), Error alert, Button, Text button'),
+          S('M04','Forgot password / Contact administration','Forgot mode, Contact mode (from Settings)','Icon circle, Contact number card, Call button, WhatsApp button, Toast'),
+          S('M05','Forced password change','Temporary (no back), Change password (from Settings), weak/okay/strong, mismatch, disabled save','Notice, Password input, Strength meter, Button'),
+          S('M06','My shipments (tab 1)','List, filtered, empty, loading, refreshing (pull to refresh)','Search field, Filter chips, Shipment card, Empty state, Tab bar'),
+          S('M07','Shipment details','Loaded, loading, copied toast','Header, Hero status badge, Description, Timeline'),
+          S('M08','Settings / Profile (tab 2)','Notifications on/off, language AR/EN','Profile card, Segmented control, Switch row, Nav rows, Log out row, Tab bar'),
+          S('M09','Push notification','Lock-screen notification → opens M07','Native notification (Expo Notifications), deep link'),
+          S('M10','System states','No internet, Session expired, Error','State view (icon, title, text, button)')]},
+        {title:'Admin dashboard (web) — Arabic with English toggle',items:[
+          S('A01','Staff login','Default, missing field','Card, Inputs, Button'),
+          S('A02','Shipments list','Results, filtered, no results, paginated','Search, Status filter, Date filter, Table, Pagination, Badges'),
+          S('A03','Add shipment (modal)','Find customer, customer selected, new customer, validation error, success + generated number','Modal, Mobile lookup, Select, Copy button'),
+          S('A04','Shipment details + update status','Push / no-push note, saved toast','Header card, Select, Textarea, History table'),
+          S('A05','Excel upload','Step 1 empty / file chosen, Step 2 preview with errors, Step 3 success','Stepper, Dropzone, Counters, Error table, Download button'),
+          S('A06','Customers list + Add customer','List, search, add modal','Table, Modal'),
+          S('A07','Customer details + Reset password','Confirm dialog, temporary password shown once, "must change" badge','Header card, Table, Confirm dialog, Copy'),
+          S('A08','Status management','Reorder (drag), active/inactive, in use (no delete), unused (delete), add/edit modal','Draggable rows, Switch, Color + icon picker, Preview badge'),
+          S('A09','Settings','Contact number saved, staff add / disable','Input, Table, Modal, Segmented control')]}
+      ],
+      compList:[['Button','primary · secondary · text; default, pressed, disabled'],['TextInput','default, focused, error, disabled; optional end action'],['StatusBadge','sm / lg; reads tone + icon from the status record'],['ShipmentCard','number, description, badge, last update; pressed'],['TimelineItem','current / past; optional note'],['HeaderBar','back arrow (mirrors) + title'],['FilterChip','selected / unselected'],['Banner','info banner with action'],['Toast','short confirmation'],['StateView','empty, not found, offline, session, error'],['TabBar','2 tabs only'],['SettingsRow','icon, label, switch or chevron']].map(([name,desc])=>({name,desc})),
+      assumptions:[
+        'The timeline for AB7K2M9XQ4 lists "In transit" twice; I read it as three entries: Received (5 Oct 09:15), In transit (6 Oct 14:40, "Left the warehouse"), and a newer In transit update today at 10:30, which matches the "Today 10:30" last update. I added a note ("Reached the Jeddah sorting center") to that last entry.',
+        '"Today" is 8 Oct 2026, so the other sample dates line up: KP3N8T5WZ2 delivered yesterday, HX9R4C6VB7 received 6 Oct, MD2F7Y8LQ3 returned 3 Oct. Timelines for those three were written to match.',
+        'The guest result shows status and timeline only. The description is hidden too, because it can reveal what the customer bought. Logged-in customers see it.',
+        'Timelines show the newest entry first, so the current status sits at the top under the hero badge.',
+        'Shipment numbers, mobile numbers and passwords always read left-to-right, even on Arabic screens. Everything else mirrors.',
+        'The "Active" filter means any status not marked final. "Delivered" means the delivered status. Returned and cancelled appear under "All" only.',
+        'Login uses the 05XXXXXXXX format (as in the sample data). +966 and 5XXXXXXXX are also accepted and normalized.',
+        'The administration contact number (+966 11 456 7890) is a placeholder. In the app it comes from the dashboard setting (A09).',
+        'Statuses and Settings are labelled "Manager" in the dashboard. Role-based hiding for regular staff is a build-time rule and is not shown as a separate staff view.',
+        'A sixth tone (purple) and a sample inactive status ("Waiting for customs clearance") were added to show long names, inactive statuses and the delete rule.',
+        'Push notification visual is shown as a neutral lock screen. iOS and Android will render it natively.',
+        'Dark mode is not designed (optional in the brief).'
+      ].map((text,i)=>({n:String(i+1).padStart(2,'0'),text}))
+    };
+  }
+}
+</script>
+</body>
+</html>

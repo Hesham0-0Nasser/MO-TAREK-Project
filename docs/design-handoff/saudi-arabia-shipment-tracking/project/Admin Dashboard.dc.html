@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#EEF0F3}a{color:#1D4F91;text-decoration:none}a:hover{color:#163D70}button,input,select,textarea{font-family:inherit}input::placeholder,textarea::placeholder{color:#98A2B3}</style>
+</helmet>
+<div style="min-height:100vh;background:#EEF0F3;font-family:'IBM Plex Sans',sans-serif;color:#101828;display:flex;flex-direction:column">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 32px;background:#fff;border-bottom:1px solid #E4E7EC">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:36px;height:36px;border-radius:10px;background:{{ pr }};display:flex;align-items:center;justify-content:center">{{ i.logo }}</div>
+      <div style="display:flex;flex-direction:column">
+        <span style="font-size:16px;font-weight:700">{{ brandEn }} · Admin dashboard</span>
+        <span style="font-size:13px;color:#667085">Clickable prototype · Web, desktop-first</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a href="Mobile%20App.dc.html" style="height:40px;padding:0 16px;border-radius:10px;border:1px solid #D0D5DD;color:#101828;display:flex;align-items:center;font-size:14px;font-weight:600">Customer app</a>
+      <a href="Admin%20Dashboard.dc.html" style="height:40px;padding:0 16px;border-radius:10px;background:#101828;color:#fff;display:flex;align-items:center;font-size:14px;font-weight:600">Admin dashboard</a>
+      <a href="Design%20System.dc.html" style="height:40px;padding:0 16px;border-radius:10px;border:1px solid #D0D5DD;color:#101828;display:flex;align-items:center;font-size:14px;font-weight:600">Design system &amp; inventory</a>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:16px 32px 0">
+    <span style="font-size:12px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:#667085;margin-inline-end:4px">Flows</span>
+    <sc-for list="{{ flows }}" as="f" hint-placeholder-count="6">
+      <button onClick="{{ f.onClick }}" style="height:36px;padding:0 14px;border-radius:18px;border:1.5px solid {{ f.border }};background:{{ f.bg }};color:{{ f.fg }};font-size:13px;font-weight:600;cursor:pointer">{{ f.label }}</button>
+    </sc-for>
+    <div style="flex:1"></div>
+    <div style="display:flex;gap:4px;padding:3px;background:#fff;border:1px solid #D0D5DD;border-radius:10px">
+      <sc-for list="{{ langSeg }}" as="o" hint-placeholder-count="2">
+        <button onClick="{{ o.onClick }}" style="height:32px;padding:0 14px;border:0;border-radius:7px;background:{{ o.bg }};color:{{ o.fg }};font-size:13px;font-weight:600;cursor:pointer;font-family:{{ o.font }}">{{ o.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="padding:16px 32px 40px">
+    <div style="max-width:1440px;margin:0 auto;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 20px 50px rgba(16,24,40,0.14);border:1px solid #D0D5DD">
+      <div style="height:44px;display:flex;align-items:center;gap:16px;padding:0 16px;background:#F2F4F7;border-bottom:1px solid #E4E7EC">
+        <div style="display:flex;gap:8px"><span style="width:12px;height:12px;border-radius:6px;background:#F97066"></span><span style="width:12px;height:12px;border-radius:6px;background:#FDB022"></span><span style="width:12px;height:12px;border-radius:6px;background:#32D583"></span></div>
+        <div style="flex:1;max-width:520px;height:28px;border-radius:8px;background:#fff;border:1px solid #E4E7EC;display:flex;align-items:center;padding:0 12px;font-size:13px;color:#475467">admin.shipment-tracker.example/{{ urlPath }}</div>
+      </div>
+
+      <div dir="{{ dir }}" style="display:flex;height:860px;position:relative;font-family:{{ font }};color:#101828;background:#F6F7F9">
+
+        <sc-if value="{{ v.login }}">
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:24px">
+            <div style="width:100%;max-width:420px;background:#fff;border:1px solid #EAECF0;border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:20px;box-shadow:0 4px 16px rgba(16,24,40,0.06)">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="width:44px;height:44px;border-radius:12px;background:{{ pr }};display:flex;align-items:center;justify-content:center">{{ i.logo }}</div>
+                <div style="display:flex;flex-direction:column"><span style="font-size:17px;font-weight:700">{{ brand }}</span><span style="font-size:14px;color:#667085">{{ t.adminPanel }}</span></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <h1 style="margin:0;font-size:24px;font-weight:700">{{ t.loginTitle }}</h1>
+                <span style="font-size:15px;color:#475467">{{ t.loginSub }}</span>
+              </div>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#344054">{{ t.emailOrMobile }}
+                <input dir="ltr" value="{{ email }}" onChange="{{ onEmail }}" style="height:48px;box-sizing:border-box;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 14px;font-size:16px;outline:none;text-align:{{ align }};color:#101828">
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#344054">{{ t.password }}
+                <input type="password" value="{{ lpw }}" onChange="{{ onLpw }}" onKeyDown="{{ onLoginKey }}" style="height:48px;box-sizing:border-box;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 14px;font-size:16px;outline:none;color:#101828">
+              </label>
+              <sc-if value="{{ loginErr }}"><span style="font-size:14px;color:#B42318">{{ t.loginErr }}</span></sc-if>
+              <button onClick="{{ onLogin }}" style="height:48px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:16px;font-weight:600;cursor:pointer" style-active="opacity:0.85">{{ t.login }}</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ v.app }}">
+          <div style="width:248px;flex-shrink:0;background:#fff;border-inline-end:1px solid #EAECF0;display:flex;flex-direction:column;padding:20px 14px;gap:24px;box-sizing:border-box">
+            <div style="display:flex;align-items:center;gap:10px;padding:0 6px">
+              <div style="width:36px;height:36px;border-radius:10px;background:{{ pr }};display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ i.logo }}</div>
+              <div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:15px;font-weight:700">{{ brand }}</span><span style="font-size:13px;color:#667085">{{ t.adminPanel }}</span></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
+                <button onClick="{{ n.onClick }}" style="height:44px;display:flex;align-items:center;gap:12px;padding:0 12px;border:0;border-radius:10px;background:{{ n.bg }};color:{{ n.fg }};font-size:15px;font-weight:600;cursor:pointer;text-align:start" style-hover="background:#F2F4F7">
+                  {{ n.icon }}<span style="flex:1">{{ n.label }}</span>
+                  <sc-if value="{{ n.mgr }}"><span style="font-size:11px;font-weight:700;color:#667085;background:#F2F4F7;border-radius:6px;padding:2px 6px">{{ t.managerOnly }}</span></sc-if>
+                </button>
+              </sc-for>
+            </div>
+            <div style="flex:1"></div>
+            <div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #EAECF0;padding-top:16px">
+              <div style="display:flex;align-items:center;gap:10px;padding:0 6px">
+                <div style="width:36px;height:36px;border-radius:18px;background:{{ prSoft }};color:{{ pr }};display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">{{ t.meInitial }}</div>
+                <div style="display:flex;flex-direction:column"><span style="font-size:14px;font-weight:600">{{ t.meName }}</span><span style="font-size:13px;color:#667085">{{ t.roleManager }}</span></div>
+              </div>
+              <button onClick="{{ onLogout }}" style="height:40px;display:flex;align-items:center;gap:10px;padding:0 12px;border:0;border-radius:10px;background:transparent;color:#B42318;font-size:14px;font-weight:600;cursor:pointer" style-hover="background:#FEF3F2">{{ i.logout }}<span>{{ t.logout }}</span></button>
+            </div>
+          </div>
+
+          <div style="flex:1;min-width:0;overflow-y:auto;padding:28px 32px 40px;box-sizing:border-box">
+
+            <sc-if value="{{ v.shipments }}">
+              <div style="display:flex;flex-direction:column;gap:20px">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+                  <h1 style="margin:0;font-size:26px;font-weight:700">{{ t.navShipments }}</h1>
+                  <div style="display:flex;gap:10px;flex-wrap:wrap">
+                    <button onClick="{{ goUpload }}" style="height:44px;display:flex;align-items:center;gap:8px;padding:0 16px;border:1.5px solid #D0D5DD;border-radius:10px;background:#fff;color:#101828;font-size:15px;font-weight:600;cursor:pointer" style-hover="background:#F9FAFB">{{ i.upload }}<span>{{ t.uploadExcel }}</span></button>
+                    <button onClick="{{ openAdd }}" style="height:44px;display:flex;align-items:center;gap:8px;padding:0 18px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:15px;font-weight:600;cursor:pointer" style-active="opacity:0.85">{{ i.plusW }}<span>{{ t.addShipment }}</span></button>
+                  </div>
+                </div>
+                <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;overflow:hidden">
+                  <div style="display:flex;gap:12px;padding:16px;flex-wrap:wrap;border-bottom:1px solid #EAECF0">
+                    <div style="flex:1;min-width:260px;height:44px;display:flex;align-items:center;gap:10px;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 12px;box-sizing:border-box">{{ i.search }}<input value="{{ search }}" onChange="{{ onSearch }}" placeholder="{{ t.searchPh }}" style="flex:1;min-width:0;border:0;outline:none;font-size:15px;background:transparent;color:#101828"></div>
+                    <select value="{{ fStatus }}" onChange="{{ onFStatus }}" style="height:44px;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 12px;font-size:15px;background:#fff;color:#101828;min-width:170px">
+                      <option value="all">{{ t.allStatuses }}</option>
+                      <sc-for list="{{ statusOptsAll }}" as="o"><option value="{{ o.id }}">{{ o.name }}</option></sc-for>
+                    </select>
+                    <select value="{{ fDate }}" onChange="{{ onFDate }}" style="height:44px;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 12px;font-size:15px;background:#fff;color:#101828;min-width:150px">
+                      <option value="all">{{ t.anyDate }}</option><option value="today">{{ t.today }}</option><option value="7">{{ t.last7 }}</option><option value="30">{{ t.last30 }}</option>
+                    </select>
+                  </div>
+                  <div style="display:grid;grid-template-columns:minmax(130px,1fr) minmax(170px,1.3fr) minmax(130px,1.1fr) minmax(150px,1fr) minmax(120px,0.8fr);gap:16px;padding:12px 20px;background:#F9FAFB;font-size:13px;font-weight:600;color:#475467">
+                    <span>{{ t.colNumber }}</span><span>{{ t.colCustomer }}</span><span>{{ t.colDesc }}</span><span>{{ t.colStatus }}</span><span>{{ t.colUpdated }}</span>
+                  </div>
+                  <sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+                    <button onClick="{{ r.open }}" style="display:grid;grid-template-columns:minmax(130px,1fr) minmax(170px,1.3fr) minmax(130px,1.1fr) minmax(150px,1fr) minmax(120px,0.8fr);gap:16px;align-items:center;width:100%;padding:14px 20px;border:0;border-top:1px solid #F2F4F7;background:#fff;text-align:start;cursor:pointer;font-size:15px;color:#101828" style-hover="background:#F9FAFB">
+                      <span dir="ltr" style="font-family:'IBM Plex Mono',monospace;font-weight:600;justify-self:start">{{ r.no }}</span>
+                      <span style="display:flex;flex-direction:column;align-items:flex-start;gap:2px"><span style="font-weight:600">{{ r.cname }}</span><span dir="ltr" style="font-size:13px;color:#667085">{{ r.mobile }}</span></span>
+                      <span style="color:#344054">{{ r.desc }}</span>
+                      <span style="justify-self:start;display:flex;align-items:center;gap:6px;min-height:28px;padding:2px 10px;border-radius:14px;background:{{ r.b.bg }};color:{{ r.b.fg }};font-size:14px;font-weight:600">{{ r.b.icon }}<span>{{ r.b.name }}</span></span>
+                      <span style="color:#475467;font-size:14px">{{ r.upd }}</span>
+                    </button>
+                  </sc-for>
+                  <sc-if value="{{ noRows }}"><div style="padding:40px;text-align:center;color:#475467;font-size:15px">{{ t.noResults }}</div></sc-if>
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 20px;border-top:1px solid #EAECF0">
+                    <span style="font-size:14px;color:#475467">{{ pageText }}</span>
+                    <div style="display:flex;gap:6px;align-items:center">
+                      <button onClick="{{ prevPage }}" style="height:36px;padding:0 12px;border:1px solid #D0D5DD;border-radius:8px;background:#fff;font-size:14px;cursor:pointer;color:#344054">{{ t.prev }}</button>
+                      <sc-for list="{{ pages }}" as="pg"><button onClick="{{ pg.onClick }}" style="width:36px;height:36px;border:1px solid {{ pg.border }};border-radius:8px;background:{{ pg.bg }};color:{{ pg.fg }};font-size:14px;font-weight:600;cursor:pointer">{{ pg.n }}</button></sc-for>
+                      <button onClick="{{ nextPage }}" style="height:36px;padding:0 12px;border:1px solid #D0D5DD;border-radius:8px;background:#fff;font-size:14px;cursor:pointer;color:#344054">{{ t.next }}</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ v.shipment }}">
+              <div style="display:flex;flex-direction:column;gap:20px">
+                <button onClick="{{ goShipments }}" style="align-self:flex-start;height:36px;display:flex;align-items:center;gap:6px;padding:0 8px;border:0;background:transparent;color:#475467;font-size:14px;font-weight:600;cursor:pointer">{{ i.back }}<span>{{ t.backToList }}</span></button>
+                <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+                  <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <span dir="ltr" style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:600">{{ cur.no }}</span>
+                      <button onClick="{{ onCopyCur }}" style="height:32px;display:flex;align-items:center;gap:6px;padding:0 10px;border:0;border-radius:8px;background:{{ prSoft }};color:{{ pr }};font-size:13px;font-weight:600;cursor:pointer">{{ i.copy }}<span>{{ t.copy }}</span></button>
+                    </div>
+                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:15px;color:#344054"><span style="font-weight:600">{{ cur.cname }}</span><span style="color:#98A2B3">·</span><span dir="ltr">{{ cur.mobile }}</span><span style="color:#98A2B3">·</span><span>{{ cur.desc }}</span></div>
+                  </div>
+                  <span style="display:flex;align-items:center;gap:10px;min-height:44px;padding:4px 18px;border-radius:22px;background:{{ cur.b.bg }};color:{{ cur.b.fg }};font-size:18px;font-weight:700">{{ cur.bigIcon }}<span>{{ cur.b.name }}</span></span>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px;align-items:start">
+                  <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:16px">
+                    <h2 style="margin:0;font-size:18px;font-weight:700">{{ t.updateStatus }}</h2>
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#344054">{{ t.newStatus }}
+                      <select value="{{ upd.status }}" onChange="{{ onUpdStatus }}" style="height:48px;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 12px;font-size:16px;background:#fff;color:#101828">
+                        <sc-for list="{{ statusOpts }}" as="o"><option value="{{ o.id }}">{{ o.name }}</option></sc-for>
+                      </select>
+                    </label>
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#344054">{{ t.noteOptional }}
+                      <textarea value="{{ upd.note }}" onChange="{{ onUpdNote }}" placeholder="{{ t.notePh }}" rows="3" style="border:1.5px solid #D0D5DD;border-radius:10px;padding:12px 14px;font-size:15px;resize:vertical;outline:none;color:#101828"></textarea>
+                    </label>
+                    <div style="display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:10px;background:{{ pushBox.bg }};color:{{ pushBox.fg }};font-size:14px;line-height:20px">{{ pushBox.icon }}<span>{{ pushBox.text }}</span></div>
+                    <button onClick="{{ onUpdSave }}" style="height:48px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:16px;font-weight:600;cursor:pointer" style-active="opacity:0.85">{{ t.saveStatus }}</button>
+                  </div>
+                  <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;overflow:hidden">
+                    <h2 style="margin:0;font-size:18px;font-weight:700;padding:20px 24px">{{ t.history }}</h2>
+                    <div style="display:grid;grid-template-columns:minmax(140px,1fr) minmax(140px,1.4fr) minmax(110px,0.9fr) minmax(110px,0.9fr);gap:16px;padding:10px 24px;background:#F9FAFB;font-size:13px;font-weight:600;color:#475467">
+                      <span>{{ t.colStatus }}</span><span>{{ t.colNote }}</span><span>{{ t.colBy }}</span><span>{{ t.colWhen }}</span>
+                    </div>
+                    <sc-for list="{{ cur.hist }}" as="h" hint-placeholder-count="3">
+                      <div style="display:grid;grid-template-columns:minmax(140px,1fr) minmax(140px,1.4fr) minmax(110px,0.9fr) minmax(110px,0.9fr);gap:16px;align-items:center;padding:14px 24px;border-top:1px solid #F2F4F7;font-size:14px">
+                        <span style="justify-self:start;display:flex;align-items:center;gap:6px;min-height:28px;padding:2px 10px;border-radius:14px;background:{{ h.b.bg }};color:{{ h.b.fg }};font-weight:600">{{ h.b.icon }}<span>{{ h.b.name }}</span></span>
+                        <span style="color:{{ h.noteColor }}">{{ h.note }}</span>
+                        <span style="color:#344054">{{ h.by }}</span>
+                        <span style="color:#475467">{{ h.at }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ v.upload }}">
+              <div style="display:flex;flex-direction:column;gap:20px;max-width:880px">
+                <button onClick="{{ goShipments }}" style="align-self:flex-start;height:36px;display:flex;align-items:center;gap:6px;padding:0 8px;border:0;background:transparent;color:#475467;font-size:14px;font-weight:600;cursor:pointer">{{ i.back }}<span>{{ t.backToList }}</span></button>
+                <h1 style="margin:0;font-size:26px;font-weight:700">{{ t.upTitle }}</h1>
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                  <sc-for list="{{ steps }}" as="sp" hint-placeholder-count="3">
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <span style="width:32px;height:32px;border-radius:16px;background:{{ sp.bg }};color:{{ sp.fg }};display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700">{{ sp.n }}</span>
+                      <span style="font-size:15px;font-weight:600;color:{{ sp.label }}">{{ sp.name }}</span>
+                      <sc-if value="{{ sp.line }}"><span style="width:48px;height:2px;background:#D0D5DD"></span></sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ up.s1 }}">
+                  <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:20px">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px;border-radius:12px;background:#F6F7F9">
+                      <span style="font-size:15px;line-height:22px;color:#344054;flex:1;min-width:240px">{{ t.templateHint }}</span>
+                      <button onClick="{{ onTemplate }}" style="height:44px;display:flex;align-items:center;gap:8px;padding:0 16px;border:1.5px solid #D0D5DD;border-radius:10px;background:#fff;color:#101828;font-size:15px;font-weight:600;cursor:pointer">{{ i.download }}<span>{{ t.downloadTemplate }}</span></button>
+                    </div>
+                    <sc-if value="{{ noFile }}">
+                      <button onClick="{{ onChooseFile }}" style="min-height:180px;border:2px dashed #D0D5DD;border-radius:16px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;cursor:pointer;color:#101828" style-hover="background:#F9FAFB">
+                        {{ i.fileBig }}
+                        <span style="font-size:16px;font-weight:600;color:{{ pr }}">{{ t.chooseFile }}</span>
+                        <span style="font-size:14px;color:#667085">{{ t.dropHint }}</span>
+                      </button>
+                    </sc-if>
+                    <sc-if value="{{ file }}">
+                      <div style="display:flex;align-items:center;gap:14px;padding:16px;border:1.5px solid #EAECF0;border-radius:12px">
+                        {{ i.fileGreen }}
+                        <div style="flex:1;display:flex;flex-direction:column;align-items:flex-start"><span dir="ltr" style="font-size:15px;font-weight:600">shipments-october.xlsx</span><span style="font-size:13px;color:#067647">{{ t.fileReady }} · 49 {{ t.rowsWord }}</span></div>
+                        <button onClick="{{ onRemoveFile }}" style="height:36px;padding:0 12px;border:0;border-radius:8px;background:#F2F4F7;font-size:14px;font-weight:600;cursor:pointer;color:#344054">{{ t.removeFile }}</button>
+                      </div>
+                    </sc-if>
+                    <div style="display:flex;justify-content:flex-end">
+                      <button onClick="{{ toStep2 }}" style="height:48px;padding:0 24px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:16px;font-weight:600;cursor:pointer;opacity:{{ step1Opacity }}">{{ t.continue }}</button>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ up.s2 }}">
+                  <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:20px">
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px">
+                      <div style="padding:20px;border-radius:14px;background:#E7F6EC;display:flex;flex-direction:column;gap:4px"><span style="font-size:14px;font-weight:600;color:#067647">{{ t.validRows }}</span><span style="font-size:36px;font-weight:700;color:#067647">46</span></div>
+                      <div style="padding:20px;border-radius:14px;background:#FDECEA;display:flex;flex-direction:column;gap:4px"><span style="font-size:14px;font-weight:600;color:#B42318">{{ t.errorRows }}</span><span style="font-size:36px;font-weight:700;color:#B42318">3</span></div>
+                    </div>
+                    <div style="border:1px solid #EAECF0;border-radius:12px;overflow:hidden">
+                      <div style="display:grid;grid-template-columns:100px 1fr;gap:16px;padding:10px 16px;background:#F9FAFB;font-size:13px;font-weight:600;color:#475467"><span>{{ t.colRow }}</span><span>{{ t.colReason }}</span></div>
+                      <sc-for list="{{ upErrors }}" as="er" hint-placeholder-count="3">
+                        <div style="display:grid;grid-template-columns:100px 1fr;gap:16px;padding:12px 16px;border-top:1px solid #F2F4F7;font-size:15px"><span style="font-weight:600">{{ er.row }}</span><span style="color:#B42318">{{ er.reason }}</span></div>
+                      </sc-for>
+                    </div>
+                    <span style="font-size:14px;color:#475467">{{ t.errorsSkipped }}</span>
+                    <div style="display:flex;justify-content:space-between;gap:12px">
+                      <button onClick="{{ toStep1 }}" style="height:48px;padding:0 20px;border:1.5px solid #D0D5DD;border-radius:10px;background:#fff;color:#101828;font-size:16px;font-weight:600;cursor:pointer">{{ t.back }}</button>
+                      <button onClick="{{ toStep3 }}" style="height:48px;padding:0 24px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:16px;font-weight:600;cursor:pointer" style-active="opacity:0.85">{{ t.confirmImport }}</button>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ up.s3 }}">
+                  <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:40px 24px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+                    <div style="width:72px;height:72px;border-radius:36px;background:#E7F6EC;display:flex;align-items:center;justify-content:center">{{ i.checkGreen }}</div>
+                    <h2 style="margin:0;font-size:22px;font-weight:700">{{ t.importDone }}</h2>
+                    <span style="font-size:15px;color:#475467;max-width:420px">{{ t.importDoneSub }}</span>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;padding-top:8px">
+                      <button onClick="{{ onDownloadNums }}" style="height:48px;display:flex;align-items:center;gap:8px;padding:0 20px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:16px;font-weight:600;cursor:pointer">{{ i.downloadW }}<span>{{ t.downloadNumbers }}</span></button>
+                      <button onClick="{{ goShipments }}" style="height:48px;padding:0 20px;border:1.5px solid #D0D5DD;border-radius:10px;background:#fff;color:#101828;font-size:16px;font-weight:600;cursor:pointer">{{ t.backToList }}</button>
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ v.customers }}">
+              <div style="display:flex;flex-direction:column;gap:20px">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+                  <h1 style="margin:0;font-size:26px;font-weight:700">{{ t.navCustomers }}</h1>
+                  <button onClick="{{ openAddCust }}" style="height:44px;display:flex;align-items:center;gap:8px;padding:0 18px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:15px;font-weight:600;cursor:pointer">{{ i.plusW }}<span>{{ t.addCustomer }}</span></button>
+                </div>
+                <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;overflow:hidden">
+                  <div style="padding:16px;border-bottom:1px solid #EAECF0">
+                    <div style="max-width:420px;height:44px;display:flex;align-items:center;gap:10px;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 12px;box-sizing:border-box">{{ i.search }}<input value="{{ custSearch }}" onChange="{{ onCustSearch }}" placeholder="{{ t.custSearch }}" style="flex:1;min-width:0;border:0;outline:none;font-size:15px;background:transparent;color:#101828"></div>
+                  </div>
+                  <div style="display:grid;grid-template-columns:minmax(180px,1.4fr) minmax(140px,1fr) minmax(100px,0.6fr) 24px;gap:16px;padding:12px 20px;background:#F9FAFB;font-size:13px;font-weight:600;color:#475467"><span>{{ t.colName }}</span><span>{{ t.colMobile }}</span><span>{{ t.colShipments }}</span><span></span></div>
+                  <sc-for list="{{ custRows }}" as="c" hint-placeholder-count="5">
+                    <button onClick="{{ c.open }}" style="display:grid;grid-template-columns:minmax(180px,1.4fr) minmax(140px,1fr) minmax(100px,0.6fr) 24px;gap:16px;align-items:center;width:100%;padding:14px 20px;border:0;border-top:1px solid #F2F4F7;background:#fff;text-align:start;cursor:pointer;font-size:15px;color:#101828" style-hover="background:#F9FAFB">
+                      <span style="display:flex;align-items:center;gap:10px;font-weight:600"><span style="width:32px;height:32px;border-radius:16px;background:#F2F4F7;color:#475467;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">{{ c.initial }}</span>{{ c.name }}</span>
+                      <span dir="ltr" style="justify-self:start;color:#344054">{{ c.mobile }}</span>
+                      <span style="color:#344054">{{ c.count }}</span>
+                      {{ i.fwd }}
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ v.customer }}">
+              <div style="display:flex;flex-direction:column;gap:20px">
+                <button onClick="{{ goCustomers }}" style="align-self:flex-start;height:36px;display:flex;align-items:center;gap:6px;padding:0 8px;border:0;background:transparent;color:#475467;font-size:14px;font-weight:600;cursor:pointer">{{ i.back }}<span>{{ t.backToCustomers }}</span></button>
+                <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+                  <div style="display:flex;align-items:center;gap:16px">
+                    <div style="width:56px;height:56px;border-radius:28px;background:{{ prSoft }};color:{{ pr }};display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700">{{ cc.initial }}</div>
+                    <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start">
+                      <span style="font-size:22px;font-weight:700">{{ cc.name }}</span>
+                      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span dir="ltr" style="font-size:15px;color:#475467">{{ cc.mobile }}</span>
+                        <sc-if value="{{ cc.must }}"><span style="font-size:13px;font-weight:600;color:#B54708;background:#FEF3E2;border-radius:12px;padding:3px 10px">{{ t.mustChange }}</span></sc-if>
+                      </div>
+                    </div>
+                  </div>
+                  <button onClick="{{ openReset }}" style="height:44px;display:flex;align-items:center;gap:8px;padding:0 16px;border:1.5px solid #D0D5DD;border-radius:10px;background:#fff;color:#101828;font-size:15px;font-weight:600;cursor:pointer" style-hover="background:#F9FAFB">{{ i.lock }}<span>{{ t.resetPw }}</span></button>
+                </div>
+                <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;overflow:hidden">
+                  <h2 style="margin:0;font-size:18px;font-weight:700;padding:20px 24px">{{ t.customerShipments }}</h2>
+                  <div style="display:grid;grid-template-columns:minmax(130px,1fr) minmax(130px,1.2fr) minmax(150px,1fr) minmax(120px,0.8fr);gap:16px;padding:10px 24px;background:#F9FAFB;font-size:13px;font-weight:600;color:#475467"><span>{{ t.colNumber }}</span><span>{{ t.colDesc }}</span><span>{{ t.colStatus }}</span><span>{{ t.colUpdated }}</span></div>
+                  <sc-for list="{{ cc.ships }}" as="r" hint-placeholder-count="3">
+                    <button onClick="{{ r.open }}" style="display:grid;grid-template-columns:minmax(130px,1fr) minmax(130px,1.2fr) minmax(150px,1fr) minmax(120px,0.8fr);gap:16px;align-items:center;width:100%;padding:14px 24px;border:0;border-top:1px solid #F2F4F7;background:#fff;text-align:start;cursor:pointer;font-size:15px;color:#101828" style-hover="background:#F9FAFB">
+                      <span dir="ltr" style="font-family:'IBM Plex Mono',monospace;font-weight:600;justify-self:start">{{ r.no }}</span>
+                      <span style="color:#344054">{{ r.desc }}</span>
+                      <span style="justify-self:start;display:flex;align-items:center;gap:6px;min-height:28px;padding:2px 10px;border-radius:14px;background:{{ r.b.bg }};color:{{ r.b.fg }};font-size:14px;font-weight:600">{{ r.b.icon }}<span>{{ r.b.name }}</span></span>
+                      <span style="color:#475467;font-size:14px">{{ r.upd }}</span>
+                    </button>
+                  </sc-for>
+                  <sc-if value="{{ cc.none }}"><div style="padding:32px;text-align:center;color:#475467;font-size:15px;border-top:1px solid #F2F4F7">{{ t.noShipments }}</div></sc-if>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ v.statuses }}">
+              <div style="display:flex;flex-direction:column;gap:20px;max-width:1080px">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+                  <div style="display:flex;flex-direction:column;gap:6px">
+                    <h1 style="margin:0;font-size:26px;font-weight:700">{{ t.navStatuses }}</h1>
+                    <span style="font-size:15px;color:#475467;max-width:640px">{{ t.statusesSub }}</span>
+                  </div>
+                  <button onClick="{{ openNewStatus }}" style="height:44px;display:flex;align-items:center;gap:8px;padding:0 18px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:15px;font-weight:600;cursor:pointer">{{ i.plusW }}<span>{{ t.addStatus }}</span></button>
+                </div>
+                <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;overflow:hidden">
+                  <sc-for list="{{ stRows }}" as="sr" hint-placeholder-count="6">
+                    <div draggable="true" onDragStart="{{ sr.onDragStart }}" onDragOver="{{ sr.onDragOver }}" onDrop="{{ sr.onDrop }}" onDragEnd="{{ sr.onDragEnd }}" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:14px 20px;border-top:{{ sr.borderTop }};background:{{ sr.bg }}">
+                      <span style="cursor:grab;color:#98A2B3;display:flex">{{ i.grip }}</span>
+                      <span style="width:20px;font-size:14px;font-weight:600;color:#98A2B3">{{ sr.order }}</span>
+                      <div style="flex:1;min-width:240px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;opacity:{{ sr.opacity }}">
+                        <span style="display:flex;align-items:center;gap:6px;min-height:30px;padding:2px 12px;border-radius:15px;background:{{ sr.b.bg }};color:{{ sr.b.fg }};font-size:15px;font-weight:600">{{ sr.b.icon }}<span>{{ sr.b.name }}</span></span>
+                        <span style="font-size:14px;color:#667085">{{ sr.other }}</span>
+                      </div>
+                      <div style="display:flex;gap:6px;flex-wrap:wrap">
+                        <sc-if value="{{ sr.final }}"><span style="font-size:12px;font-weight:600;color:#344054;background:#F2F4F7;border-radius:6px;padding:3px 8px">{{ t.final }}</span></sc-if>
+                        <sc-if value="{{ sr.push }}"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#344054;background:#F2F4F7;border-radius:6px;padding:3px 8px">{{ i.bellSm }}{{ t.push }}</span></sc-if>
+                      </div>
+                      <span style="min-width:150px;font-size:14px;color:#475467">{{ sr.usedText }}</span>
+                      <button onClick="{{ sr.onToggle }}" style="display:flex;align-items:center;gap:8px;border:0;background:transparent;cursor:pointer;font-size:14px;font-weight:600;color:#344054;min-width:108px;padding:0">
+                        <span style="width:40px;height:24px;border-radius:12px;background:{{ sr.sw.track }};padding:2px;box-sizing:border-box;display:flex;justify-content:{{ sr.sw.justify }}"><span style="width:20px;height:20px;border-radius:10px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.2)"></span></span>
+                        <span>{{ sr.activeText }}</span>
+                      </button>
+                      <button onClick="{{ sr.onEdit }}" style="height:36px;display:flex;align-items:center;gap:6px;padding:0 12px;border:1px solid #D0D5DD;border-radius:8px;background:#fff;font-size:14px;font-weight:600;cursor:pointer;color:#344054">{{ i.edit }}<span>{{ t.edit }}</span></button>
+                      <sc-if value="{{ sr.canDelete }}">
+                        <button onClick="{{ sr.onDelete }}" style="height:36px;display:flex;align-items:center;gap:6px;padding:0 12px;border:1px solid #FDA29B;border-radius:8px;background:#fff;font-size:14px;font-weight:600;cursor:pointer;color:#B42318">{{ i.trash }}<span>{{ t.delete }}</span></button>
+                      </sc-if>
+                      <sc-if value="{{ sr.locked }}">
+                        <span title="{{ t.cannotDelete }}" style="height:36px;display:flex;align-items:center;gap:6px;padding:0 12px;border:1px dashed #D0D5DD;border-radius:8px;font-size:13px;color:#667085">{{ i.lockSm }}<span>{{ t.cannotDelete }}</span></span>
+                      </sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ v.settings }}">
+              <div style="display:flex;flex-direction:column;gap:20px;max-width:960px">
+                <h1 style="margin:0;font-size:26px;font-weight:700">{{ t.navSettings }}</h1>
+                <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px">
+                  <h2 style="margin:0;font-size:18px;font-weight:700">{{ t.contactTitle }}</h2>
+                  <span style="font-size:15px;color:#475467">{{ t.contactHint }}</span>
+                  <div style="display:flex;gap:10px;flex-wrap:wrap">
+                    <input dir="ltr" value="{{ contact }}" onChange="{{ onContact }}" style="width:280px;height:48px;box-sizing:border-box;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 14px;font-size:16px;outline:none;text-align:{{ align }};color:#101828">
+                    <button onClick="{{ onSaveContact }}" style="height:48px;padding:0 22px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:15px;font-weight:600;cursor:pointer">{{ t.save }}</button>
+                  </div>
+                </div>
+                <div style="background:#fff;border:1px solid #EAECF0;border-radius:16px;overflow:hidden">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 24px">
+                    <h2 style="margin:0;font-size:18px;font-weight:700">{{ t.staffTitle }}</h2>
+                    <button onClick="{{ openAddStaff }}" style="height:40px;display:flex;align-items:center;gap:8px;padding:0 14px;border:1.5px solid #D0D5DD;border-radius:10px;background:#fff;color:#101828;font-size:14px;font-weight:600;cursor:pointer">{{ i.plus }}<span>{{ t.addStaff }}</span></button>
+                  </div>
+                  <div style="display:grid;grid-template-columns:minmax(160px,1.2fr) minmax(180px,1.3fr) minmax(90px,0.6fr) minmax(90px,0.6fr) 110px;gap:16px;padding:10px 24px;background:#F9FAFB;font-size:13px;font-weight:600;color:#475467"><span>{{ t.colName }}</span><span>{{ t.colEmail }}</span><span>{{ t.colRole }}</span><span>{{ t.colState }}</span><span></span></div>
+                  <sc-for list="{{ staffRows }}" as="sf" hint-placeholder-count="4">
+                    <div style="display:grid;grid-template-columns:minmax(160px,1.2fr) minmax(180px,1.3fr) minmax(90px,0.6fr) minmax(90px,0.6fr) 110px;gap:16px;align-items:center;padding:12px 24px;border-top:1px solid #F2F4F7;font-size:15px">
+                      <span style="font-weight:600;color:{{ sf.nameColor }}">{{ sf.name }}</span>
+                      <span dir="ltr" style="justify-self:start;color:#475467">{{ sf.email }}</span>
+                      <span style="color:#344054">{{ sf.role }}</span>
+                      <span style="justify-self:start;font-size:13px;font-weight:600;color:{{ sf.stFg }};background:{{ sf.stBg }};border-radius:12px;padding:3px 10px">{{ sf.state }}</span>
+                      <sc-if value="{{ sf.canToggle }}"><button onClick="{{ sf.onToggle }}" style="height:34px;padding:0 12px;border:1px solid #D0D5DD;border-radius:8px;background:#fff;font-size:14px;font-weight:600;cursor:pointer;color:#344054">{{ sf.action }}</button></sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ m.any }}">
+          <div style="position:absolute;inset:0;background:rgba(16,24,40,0.45);display:flex;align-items:flex-start;justify-content:center;padding:56px 24px;z-index:20;overflow-y:auto;box-sizing:border-box">
+            <div style="width:100%;max-width:520px;background:#fff;border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:18px;box-shadow:0 24px 48px rgba(16,24,40,0.2);box-sizing:border-box">
+
+              <sc-if value="{{ m.add }}">
+                <h2 style="margin:0;font-size:20px;font-weight:700">{{ t.addShipment }}</h2>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <span style="font-size:14px;font-weight:600;color:#344054">{{ t.custMobile }}</span>
+                  <sc-if value="{{ add.notPicked }}">
+                    <input dir="ltr" value="{{ add.mobile }}" onChange="{{ add.onMobile }}" placeholder="05XXXXXXXX" style="height:48px;box-sizing:border-box;border:1.5px solid {{ add.mBorder }};border-radius:10px;padding:0 14px;font-size:16px;outline:none;text-align:{{ align }};color:#101828">
+                    <span style="font-size:13px;color:#667085">{{ t.custMobileHint }}</span>
+                    <sc-for list="{{ add.matches }}" as="mt">
+                      <button onClick="{{ mt.onPick }}" style="display:flex;align-items:center;justify-content:space-between;gap:10px;height:52px;padding:0 14px;border:1px solid #EAECF0;border-radius:10px;background:#F9FAFB;cursor:pointer;font-size:15px;color:#101828;text-align:start" style-hover="background:#F2F4F7"><span style="font-weight:600">{{ mt.name }}</span><span dir="ltr" style="color:#475467">{{ mt.mobile }}</span></button>
+                    </sc-for>
+                  </sc-if>
+                  <sc-if value="{{ add.picked }}">
+                    <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1.5px solid {{ pr }};border-radius:10px;background:{{ prSoft }}">
+                      {{ i.checkPr }}
+                      <div style="flex:1;display:flex;flex-direction:column;align-items:flex-start"><span style="font-size:15px;font-weight:600">{{ add.pickedName }}</span><span dir="ltr" style="font-size:13px;color:#475467">{{ add.pickedMobile }}</span></div>
+                      <button onClick="{{ add.onChange }}" style="height:34px;padding:0 12px;border:0;border-radius:8px;background:#fff;font-size:14px;font-weight:600;cursor:pointer;color:#344054">{{ t.change }}</button>
+                    </div>
+                  </sc-if>
+                </div>
+                <sc-if value="{{ add.isNew }}">
+                  <div style="display:flex;flex-direction:column;gap:6px;padding:14px;border-radius:12px;background:#F6F7F9">
+                    <span style="font-size:13px;font-weight:700;color:{{ pr }}">{{ t.newCustomer }}</span>
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#344054">{{ t.newCustName }}<input value="{{ add.name }}" onChange="{{ add.onName }}" style="height:48px;box-sizing:border-box;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 14px;font-size:16px;outline:none;background:#fff;color:#101828"></label>
+                  </div>
+                </sc-if>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#344054">{{ t.descOptional }}<input value="{{ add.desc }}" onChange="{{ add.onDesc }}" style="height:48px;box-sizing:border-box;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 14px;font-size:16px;outline:none;color:#101828"></label>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#344054">{{ t.initialStatus }}
+                  <select value="{{ add.status }}" onChange="{{ add.onStatus }}" style="height:48px;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 12px;font-size:16px;background:#fff;color:#101828">
+                    <sc-for list="{{ statusOpts }}" as="o"><option value="{{ o.id }}">{{ o.name }}</option></sc-for>
+                  </select>
+                </label>
+                <sc-if value="{{ add.err }}"><span style="font-size:14px;color:#B42318">{{ t.addErr }}</span></sc-if>
+                <div style="display:flex;justify-content:flex-end;gap:10px;padding-top:4px">
+                  <button onClick="{{ closeModal }}" style="height:44px;padding:0 18px;border:1.5px solid #D0D5DD;border-radius:10px;background:#fff;color:#101828;font-size:15px;font-weight:600;cursor:pointer">{{ t.cancel }}</button>
+                  <button onClick="{{ add.onSave }}" style="height:44px;padding:0 22px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:15px;font-weight:600;cursor:pointer">{{ t.save }}</button>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ m.addDone }}">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;padding:8px 0">
+                  <div style="width:64px;height:64px;border-radius:32px;background:#E7F6EC;display:flex;align-items:center;justify-content:center">{{ i.checkGreen }}</div>
+                  <h2 style="margin:0;font-size:20px;font-weight:700">{{ t.created }}</h2>
+                  <span style="font-size:15px;color:#475467;max-width:380px">{{ t.createdSub }}</span>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-radius:14px;background:#F6F7F9;border:1px solid #EAECF0">
+                  <span dir="ltr" style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:600;letter-spacing:1px">{{ add.doneNo }}</span>
+                  <button onClick="{{ onCopyNew }}" style="height:40px;display:flex;align-items:center;gap:6px;padding:0 14px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:14px;font-weight:600;cursor:pointer">{{ i.copyW }}<span>{{ t.copy }}</span></button>
+                </div>
+                <div style="display:flex;justify-content:flex-end;gap:10px">
+                  <button onClick="{{ openAdd }}" style="height:44px;padding:0 18px;border:1.5px solid #D0D5DD;border-radius:10px;background:#fff;color:#101828;font-size:15px;font-weight:600;cursor:pointer">{{ t.addAnother }}</button>
+                  <button onClick="{{ closeModal }}" style="height:44px;padding:0 22px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:15px;font-weight:600;cursor:pointer">{{ t.done }}</button>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ m.addCust }}">
+                <h2 style="margin:0;font-size:20px;font-weight:700">{{ t.addCustomer }}</h2>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#344054">{{ t.newCustName }}<input value="{{ newCust.name }}" onChange="{{ onNcName }}" style="height:48px;box-sizing:border-box;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 14px;font-size:16px;outline:none;color:#101828"></label>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#344054">{{ t.colMobile }}<input dir="ltr" value="{{ newCust.mobile }}" onChange="{{ onNcMobile }}" placeholder="05XXXXXXXX" style="height:48px;box-sizing:border-box;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 14px;font-size:16px;outline:none;text-align:{{ align }};color:#101828"></label>
+                <span style="font-size:14px;color:#475467;padding:12px 14px;background:#F6F7F9;border-radius:10px">{{ t.ncHint }}</span>
+                <div style="display:flex;justify-content:flex-end;gap:10px">
+                  <button onClick="{{ closeModal }}" style="height:44px;padding:0 18px;border:1.5px solid #D0D5DD;border-radius:10px;background:#fff;color:#101828;font-size:15px;font-weight:600;cursor:pointer">{{ t.cancel }}</button>
+                  <button onClick="{{ onSaveCust }}" style="height:44px;padding:0 22px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:15px;font-weight:600;cursor:pointer;opacity:{{ ncOpacity }}">{{ t.save }}</button>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ m.reset }}">
+                <div style="width:56px;height:56px;border-radius:28px;background:#FEF3E2;display:flex;align-items:center;justify-content:center">{{ i.alertAmber }}</div>
+                <h2 style="margin:0;font-size:20px;font-weight:700">{{ t.resetConfirmTitle }}</h2>
+                <span style="font-size:15px;line-height:22px;color:#475467">{{ cc.name }} · <span dir="ltr">{{ cc.mobile }}</span></span>
+                <span style="font-size:15px;line-height:22px;color:#344054">{{ t.resetConfirmText }}</span>
+                <div style="display:flex;justify-content:flex-end;gap:10px">
+                  <button onClick="{{ closeModal }}" style="height:44px;padding:0 18px;border:1.5px solid #D0D5DD;border-radius:10px;background:#fff;color:#101828;font-size:15px;font-weight:600;cursor:pointer">{{ t.cancel }}</button>
+                  <button onClick="{{ onConfirmReset }}" style="height:44px;padding:0 22px;border:0;border-radius:10px;background:#B42318;color:#fff;font-size:15px;font-weight:600;cursor:pointer">{{ t.resetYes }}</button>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ m.temp }}">
+                <h2 style="margin:0;font-size:20px;font-weight:700">{{ t.tempTitle }}</h2>
+                <div style="display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:10px;background:#FEF3E2;color:#7A2E0E;font-size:14px;font-weight:600">{{ i.alertAmberSm }}<span>{{ t.tempOnce }}</span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-radius:14px;background:#F6F7F9;border:1px solid #EAECF0">
+                  <span dir="ltr" style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:600;letter-spacing:1px">{{ tempPw }}</span>
+                  <button onClick="{{ onCopyTemp }}" style="height:40px;display:flex;align-items:center;gap:6px;padding:0 14px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:14px;font-weight:600;cursor:pointer">{{ i.copyW }}<span>{{ t.copy }}</span></button>
+                </div>
+                <span style="font-size:15px;line-height:22px;color:#344054">{{ t.tempNote }}</span>
+                <div style="display:flex;justify-content:flex-end">
+                  <button onClick="{{ closeModal }}" style="height:44px;padding:0 22px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:15px;font-weight:600;cursor:pointer">{{ t.done }}</button>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ m.status }}">
+                <h2 style="margin:0;font-size:20px;font-weight:700">{{ se.title }}</h2>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+                  <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#344054">{{ t.nameAr }}<input dir="rtl" value="{{ se.ar }}" onChange="{{ se.onAr }}" style="height:48px;box-sizing:border-box;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 14px;font-size:16px;outline:none;font-family:'IBM Plex Sans Arabic',sans-serif;color:#101828"></label>
+                  <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#344054">{{ t.nameEn }}<input dir="ltr" value="{{ se.en }}" onChange="{{ se.onEn }}" style="height:48px;box-sizing:border-box;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 14px;font-size:16px;outline:none;font-family:'IBM Plex Sans',sans-serif;color:#101828"></label>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-size:14px;font-weight:600;color:#344054">{{ t.color }}</span>
+                  <div style="display:flex;gap:10px;flex-wrap:wrap">
+                    <sc-for list="{{ se.tones }}" as="tn" hint-placeholder-count="6">
+                      <button onClick="{{ tn.onClick }}" aria-label="{{ tn.name }}" style="width:40px;height:40px;border-radius:20px;background:{{ tn.solid }};border:3px solid #fff;box-shadow:0 0 0 2px {{ tn.ring }};cursor:pointer"></button>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-size:14px;font-weight:600;color:#344054">{{ t.icon }}</span>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <sc-for list="{{ se.icons }}" as="io" hint-placeholder-count="6">
+                      <button onClick="{{ io.onClick }}" style="width:48px;height:48px;border-radius:12px;border:2px solid {{ io.border }};background:{{ io.bg }};display:flex;align-items:center;justify-content:center;cursor:pointer">{{ io.icon }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+                <button onClick="{{ se.onFinal }}" style="display:flex;align-items:center;gap:14px;border:1px solid #EAECF0;border-radius:12px;background:#fff;padding:12px 14px;cursor:pointer;text-align:start;color:#101828">
+                  <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600">{{ t.finalStatus }}</span><span style="font-size:13px;color:#667085">{{ t.finalHint }}</span></span>
+                  <span style="width:44px;height:26px;border-radius:13px;background:{{ se.finalSw.track }};padding:2px;box-sizing:border-box;display:flex;justify-content:{{ se.finalSw.justify }};flex-shrink:0"><span style="width:22px;height:22px;border-radius:11px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.2)"></span></span>
+                </button>
+                <button onClick="{{ se.onPush }}" style="display:flex;align-items:center;gap:14px;border:1px solid #EAECF0;border-radius:12px;background:#fff;padding:12px 14px;cursor:pointer;text-align:start;color:#101828">
+                  <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600">{{ t.pushToggle }}</span><span style="font-size:13px;color:#667085">{{ t.pushHint }}</span></span>
+                  <span style="width:44px;height:26px;border-radius:13px;background:{{ se.pushSw.track }};padding:2px;box-sizing:border-box;display:flex;justify-content:{{ se.pushSw.justify }};flex-shrink:0"><span style="width:22px;height:22px;border-radius:11px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.2)"></span></span>
+                </button>
+                <div style="display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:12px;background:#F6F7F9">
+                  <span style="font-size:13px;font-weight:600;color:#667085">{{ t.preview }}</span>
+                  <div style="display:flex;gap:10px;flex-wrap:wrap">
+                    <span dir="rtl" style="display:flex;align-items:center;gap:6px;min-height:30px;padding:2px 12px;border-radius:15px;background:{{ se.pv.bg }};color:{{ se.pv.fg }};font-size:15px;font-weight:600;font-family:'IBM Plex Sans Arabic',sans-serif">{{ se.pv.icon }}<span>{{ se.pvAr }}</span></span>
+                    <span dir="ltr" style="display:flex;align-items:center;gap:6px;min-height:30px;padding:2px 12px;border-radius:15px;background:{{ se.pv.bg }};color:{{ se.pv.fg }};font-size:15px;font-weight:600;font-family:'IBM Plex Sans',sans-serif">{{ se.pv.icon2 }}<span>{{ se.pvEn }}</span></span>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:flex-end;gap:10px">
+                  <button onClick="{{ closeModal }}" style="height:44px;padding:0 18px;border:1.5px solid #D0D5DD;border-radius:10px;background:#fff;color:#101828;font-size:15px;font-weight:600;cursor:pointer">{{ t.cancel }}</button>
+                  <button onClick="{{ se.onSave }}" style="height:44px;padding:0 22px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:15px;font-weight:600;cursor:pointer;opacity:{{ se.opacity }}">{{ t.save }}</button>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ m.staff }}">
+                <h2 style="margin:0;font-size:20px;font-weight:700">{{ t.addStaff }}</h2>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#344054">{{ t.name }}<input value="{{ newStaff.name }}" onChange="{{ onNsName }}" style="height:48px;box-sizing:border-box;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 14px;font-size:16px;outline:none;color:#101828"></label>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#344054">{{ t.colEmail }}<input dir="ltr" value="{{ newStaff.email }}" onChange="{{ onNsEmail }}" placeholder="name@company.sa" style="height:48px;box-sizing:border-box;border:1.5px solid #D0D5DD;border-radius:10px;padding:0 14px;font-size:16px;outline:none;text-align:{{ align }};color:#101828"></label>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <span style="font-size:14px;font-weight:600;color:#344054">{{ t.colRole }}</span>
+                  <div style="display:flex;gap:4px;padding:4px;background:#F2F4F7;border-radius:12px">
+                    <sc-for list="{{ roleSeg }}" as="ro" hint-placeholder-count="2"><button onClick="{{ ro.onClick }}" style="flex:1;height:40px;border:0;border-radius:9px;background:{{ ro.bg }};color:{{ ro.fg }};font-size:15px;font-weight:600;cursor:pointer;box-shadow:{{ ro.shadow }}">{{ ro.label }}</button></sc-for>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:flex-end;gap:10px">
+                  <button onClick="{{ closeModal }}" style="height:44px;padding:0 18px;border:1.5px solid #D0D5DD;border-radius:10px;background:#fff;color:#101828;font-size:15px;font-weight:600;cursor:pointer">{{ t.cancel }}</button>
+                  <button onClick="{{ onSaveStaff }}" style="height:44px;padding:0 22px;border:0;border-radius:10px;background:{{ pr }};color:#fff;font-size:15px;font-weight:600;cursor:pointer;opacity:{{ nsOpacity }}">{{ t.save }}</button>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ hasToast }}">
+          <div style="position:absolute;left:0;right:0;bottom:28px;display:flex;justify-content:center;z-index:30;pointer-events:none">
+            <div style="display:flex;align-items:center;gap:10px;background:#101828;color:#fff;border-radius:12px;padding:12px 18px;font-size:15px;font-weight:500;box-shadow:0 8px 24px rgba(16,24,40,0.25)">{{ i.checkW }}<span>{{ toastText }}</span></div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;brandEn&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Shipment Tracker&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Placeholder brand&quot;},&quot;brandAr&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;تتبع الشحنات&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Placeholder brand&quot;},&quot;primaryColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1D4F91&quot;,&quot;options&quot;:[&quot;#1D4F91&quot;,&quot;#0F6B5C&quot;,&quot;#3E3A8F&quot;,&quot;#8A3B12&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Placeholder brand&quot;}}">
+const PATHS={
+package:['M21 8 12 3 3 8v8l9 5 9-5z','M3 8l9 5 9-5','M12 13v8','M7.5 5.5l9 5'],
+truck:['M2 6h12v10H2z','M14 9h4l4 4v3h-8','M6 19.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z','M18 19.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'],
+check:['M20 6 9 17l-5-5'],ret:['M9 14 4 9l5-5','M4 9h11a5 5 0 0 1 0 10h-4'],x:['M18 6 6 18','M6 6l12 12'],
+clock:['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z','M12 6v6l4 2'],
+search:['M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z','M21 21l-4.3-4.3'],
+chevL:['M15 18l-6-6 6-6'],chevR:['M9 18l6-6-6-6'],arrowL:['M19 12H5','M11 18l-6-6 6-6'],arrowR:['M5 12h14','M13 6l6 6-6 6'],
+copy:['M9 9h11v11H9z','M5 15H4V4h11v1'],bell:['M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9','M10.3 21a1.9 1.9 0 0 0 3.4 0'],
+lock:['M5 11h14v10H5z','M8 11V7a4 4 0 1 1 8 0v4'],info:['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z','M12 16v-4','M12 8h.01'],
+alert:['M12 3 2 20h20z','M12 10v4','M12 17h.01'],logout:['M9 21H5V3h4','M16 17l5-5-5-5','M21 12H9'],
+plus:['M12 5v14','M5 12h14'],upload:['M12 15V3','M7 8l5-5 5 5','M4 15v5h16v-5'],download:['M12 3v12','M7 10l5 5 5-5','M4 15v5h16v-5'],
+edit:['M4 20h4L19 9l-4-4L4 16z'],grip:['M9 6h.01','M15 6h.01','M9 12h.01','M15 12h.01','M9 18h.01','M15 18h.01'],
+users:['M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z','M2 21a7 7 0 0 1 14 0','M16 3.5a4 4 0 0 1 0 7','M18 14a6 6 0 0 1 4 7'],
+tag:['M3 3h8l10 10-8 8L3 11z','M7.5 7.5h.01'],file:['M14 3H6v18h12V7z','M14 3v4h4','M9 12l6 6','M15 12l-6 6'],
+trash:['M4 7h16','M10 11v6','M14 11v6','M6 7l1 13h10l1-13','M9 7V4h6v3'],
+sliders:['M4 6h9','M17 6h3','M15 4v4','M4 12h3','M11 12h9','M9 10v4','M4 18h11','M19 18h1','M17 16v4']
+};
+function ic(n,s,c,sw){return React.createElement('svg',{width:s||20,height:s||20,viewBox:'0 0 24 24',fill:'none',stroke:c||'currentColor',strokeWidth:sw||2,strokeLinecap:'round',strokeLinejoin:'round',style:{flexShrink:0,display:'block'}},(PATHS[n]||[]).map((d,i)=>React.createElement('path',{key:i,d})));}
+const TONES={blue:{fg:'#175CD3',bg:'#EAF2FD',solid:'#2E6FD9'},amber:{fg:'#B54708',bg:'#FEF3E2',solid:'#E08A0B'},green:{fg:'#067647',bg:'#E7F6EC',solid:'#16A34A'},red:{fg:'#B42318',bg:'#FDECEA',solid:'#D92D20'},purple:{fg:'#6941C6',bg:'#F2EEFC',solid:'#7F56D9'},gray:{fg:'#475467',bg:'#F1F3F5',solid:'#98A2B3'}};
+const ICONS=['package','truck','clock','check','ret','x','alert'];
+const L=(en,ar)=>({en,ar});
+const ST0=[
+{id:'received',en:'Received',ar:'تم الاستلام',tone:'blue',icon:'package',final:false,push:true,active:true},
+{id:'transit',en:'In transit',ar:'في الطريق',tone:'amber',icon:'truck',final:false,push:true,active:true},
+{id:'customs',en:'Waiting for customs clearance',ar:'بانتظار التخليص الجمركي',tone:'purple',icon:'clock',final:false,push:true,active:false},
+{id:'delivered',en:'Delivered',ar:'تم التسليم',tone:'green',icon:'check',final:true,push:true,active:true},
+{id:'returned',en:'Returned',ar:'مرتجع',tone:'red',icon:'ret',final:true,push:true,active:true},
+{id:'cancelled',en:'Cancelled',ar:'ملغي',tone:'gray',icon:'x',final:true,push:false,active:true}];
+const CUST0=[
+{id:'c1',name:L('Ahmed Al-Otaibi','أحمد العتيبي'),mobile:'0551234567'},
+{id:'c2',name:L('Mohammed Al-Ghamdi','محمد الغامدي'),mobile:'0509876543'},
+{id:'c3',name:L('Noura Al-Harbi','نورة الحربي'),mobile:'0543217890'},
+{id:'c4',name:L('Abdullah Al-Zahrani','عبدالله الزهراني'),mobile:'0567654321'},
+{id:'c5',name:L('Reem Al-Qurashi','ريم القرشي'),mobile:'0532468135'}];
+const BY={s1:L('Sara Al-Qahtani','سارة القحطاني'),s2:L('Fahad Al-Shehri','فهد الشهري'),s3:L('Noura Al-Dosari','نورة الدوسري'),xl:L('Excel upload','رفع Excel')};
+const h=(st,en,ar,by,nen,nar)=>({st,at:L(en,ar),by,note:nen?L(nen,nar):null});
+const SHIP0=[
+{no:'AB7K2M9XQ4',cust:'c1',desc:L('Car spare parts','قطع غيار سيارات'),age:0,upd:L('Today 10:30','اليوم 10:30'),hist:[h('received','5 Oct, 09:15','5 أكتوبر، 09:15','s3'),h('transit','6 Oct, 14:40','6 أكتوبر، 14:40','s2','Left the warehouse','غادرت المستودع'),h('transit','Today, 10:30','اليوم، 10:30','s2','Reached the Jeddah sorting center','وصلت إلى مركز الفرز في جدة')]},
+{no:'TQ5W8E2RJ6',cust:'c2',desc:L('Office furniture','أثاث مكتبي'),age:0,upd:L('Today 09:05','اليوم 09:05'),hist:[h('received','Today, 09:05','اليوم، 09:05','xl')]},
+{no:'ZL4H7P3NC8',cust:'c4',desc:L('Food supplies','مواد غذائية'),age:0,upd:L('Today 08:12','اليوم 08:12'),hist:[h('received','6 Oct, 10:00','6 أكتوبر، 10:00','s3'),h('transit','Today, 08:12','اليوم، 08:12','s2','Left Dammam','غادرت الدمام')]},
+{no:'KP3N8T5WZ2',cust:'c1',desc:L('Electronics','أجهزة إلكترونية'),age:1,upd:L('Yesterday 16:05','أمس 16:05'),hist:[h('received','3 Oct, 11:00','3 أكتوبر، 11:00','s3'),h('transit','4 Oct, 08:20','4 أكتوبر، 08:20','s2','Left the Riyadh warehouse','غادرت مستودع الرياض'),h('delivered','Yesterday, 16:05','أمس، 16:05','s2','Delivered in Dammam','تم التسليم في الدمام')]},
+{no:'WE3G6N7FP5',cust:'c2',desc:L('Sports equipment','أدوات رياضية'),age:1,upd:L('Yesterday 12:40','أمس 12:40'),hist:[h('received','5 Oct, 15:30','5 أكتوبر، 15:30','s3'),h('transit','Yesterday, 12:40','أمس، 12:40','s2')]},
+{no:'BV6M2K9DX1',cust:'c3',desc:L('Cosmetics','مستحضرات تجميل'),age:1,upd:L('Yesterday 11:15','أمس 11:15'),hist:[h('received','4 Oct, 09:00','4 أكتوبر، 09:00','s3'),h('transit','5 Oct, 13:20','5 أكتوبر، 13:20','s2'),h('delivered','Yesterday, 11:15','أمس، 11:15','s2','Delivered in Riyadh','تم التسليم في الرياض')]},
+{no:'HX9R4C6VB7',cust:'c1',desc:L('Clothing','ملابس'),age:2,upd:L('6 Oct 13:45','6 أكتوبر 13:45'),hist:[h('received','6 Oct, 13:45','6 أكتوبر، 13:45','s3')]},
+{no:'RC8J5Q4TY9',cust:'c4',desc:L('Books','كتب'),age:3,upd:L('5 Oct 10:20','5 أكتوبر 10:20'),hist:[h('received','4 Oct, 16:00','4 أكتوبر، 16:00','s3'),h('cancelled','5 Oct, 10:20','5 أكتوبر، 10:20','s1','Cancelled at the customer’s request','أُلغيت بطلب من العميل')]},
+{no:'MD2F7Y8LQ3',cust:'c1',desc:L('Home tools','أدوات منزلية'),age:5,upd:L('3 Oct 15:20','3 أكتوبر 15:20'),hist:[h('received','29 Sep, 10:10','29 سبتمبر، 10:10','s3'),h('transit','30 Sep, 12:30','30 سبتمبر، 12:30','s2'),h('returned','3 Oct, 15:20','3 أكتوبر، 15:20','s2','The recipient could not be reached','تعذّر الوصول إلى المستلم')]}];
+const STAFF0=[
+{id:'s1',name:L('Sara Al-Qahtani','سارة القحطاني'),email:'sara@company.sa',role:'manager',active:true,me:true},
+{id:'s2',name:L('Fahad Al-Shehri','فهد الشهري'),email:'fahad@company.sa',role:'staff',active:true},
+{id:'s3',name:L('Noura Al-Dosari','نورة الدوسري'),email:'noura@company.sa',role:'staff',active:true},
+{id:'s4',name:L('Khalid Al-Mutairi','خالد المطيري'),email:'khalid@company.sa',role:'staff',active:false}];
+const K={adminPanel:['Admin dashboard','لوحة الإدارة'],navShipments:['Shipments','الشحنات'],navCustomers:['Customers','العملاء'],navStatuses:['Statuses','الحالات'],navSettings:['Settings','الإعدادات'],managerOnly:['Manager','مدير'],logout:['Log out','تسجيل الخروج'],meName:['Sara Al-Qahtani','سارة القحطاني'],meInitial:['S','س'],
+loginTitle:['Staff login','دخول الموظفين'],loginSub:['Sign in to manage shipments.','سجّل الدخول لإدارة الشحنات.'],emailOrMobile:['Email or mobile number','البريد الإلكتروني أو رقم الجوال'],password:['Password','كلمة المرور'],login:['Log in','تسجيل الدخول'],loginErr:['Please enter your email or mobile and your password.','يرجى إدخال البريد الإلكتروني أو الجوال وكلمة المرور.'],
+searchPh:['Search by shipment number or mobile','ابحث برقم الشحنة أو رقم الجوال'],allStatuses:['All statuses','كل الحالات'],anyDate:['Any date','أي تاريخ'],today:['Today','اليوم'],last7:['Last 7 days','آخر 7 أيام'],last30:['Last 30 days','آخر 30 يوماً'],addShipment:['Add shipment','إضافة شحنة'],uploadExcel:['Upload Excel','رفع ملف Excel'],
+colNumber:['Shipment number','رقم الشحنة'],colCustomer:['Customer','العميل'],colDesc:['Description','الوصف'],colStatus:['Status','الحالة'],colUpdated:['Last updated','آخر تحديث'],prev:['Previous','السابق'],next:['Next','التالي'],noResults:['No shipments match your search.','لا توجد شحنات مطابقة للبحث.'],showing:['Showing {a}–{b} of {n}','عرض {a}–{b} من {n}'],
+custMobile:['Customer mobile','جوال العميل'],custMobileHint:['Type the mobile number to find an existing customer.','اكتب رقم الجوال للبحث عن عميل حالي.'],newCustomer:['New customer — no account found for this number','عميل جديد — لا يوجد حساب لهذا الرقم'],newCustName:['Customer name','اسم العميل'],descOptional:['Description (optional)','الوصف (اختياري)'],initialStatus:['Initial status','الحالة الأولى'],save:['Save','حفظ'],cancel:['Cancel','إلغاء'],addErr:['Please choose a customer or enter a new customer’s name and mobile.','يرجى اختيار عميل أو إدخال اسم وجوال العميل الجديد.'],
+created:['Shipment created','تم إنشاء الشحنة'],createdSub:['Share this number with the customer so they can track it in the app.','شارك هذا الرقم مع العميل ليتمكن من تتبع الشحنة في التطبيق.'],copy:['Copy','نسخ'],copied:['Copied','تم النسخ'],done:['Done','تم'],addAnother:['Add another','إضافة شحنة أخرى'],change:['Change','تغيير'],
+backToList:['Back to shipments','العودة إلى الشحنات'],updateStatus:['Update status','تحديث الحالة'],newStatus:['New status','الحالة الجديدة'],noteOptional:['Note (optional)','ملاحظة (اختياري)'],notePh:['e.g. Left the Riyadh warehouse','مثال: غادرت مستودع الرياض'],saveStatus:['Save status','حفظ الحالة'],pushNote:['Saving sends a push notification to the customer.','عند الحفظ يصل إشعار إلى العميل.'],noPushNote:['This status does not send a notification.','هذه الحالة لا ترسل إشعاراً للعميل.'],history:['Status history','سجل الحالات'],colNote:['Note','الملاحظة'],colBy:['Changed by','بواسطة'],colWhen:['Date and time','التاريخ والوقت'],statusUpdated:['Status updated. The customer was notified.','تم تحديث الحالة وإشعار العميل.'],statusUpdatedNoPush:['Status updated.','تم تحديث الحالة.'],justNow:['Today, just now','اليوم، الآن'],justNowShort:['Just now','الآن'],
+upTitle:['Upload Excel','رفع ملف Excel'],step1:['Upload file','رفع الملف'],step2:['Preview','المعاينة'],step3:['Done','الانتهاء'],downloadTemplate:['Download template','تنزيل القالب'],templateHint:['Use the template. One shipment per row: customer mobile, customer name, description, status.','استخدم القالب. شحنة واحدة في كل صف: جوال العميل، اسم العميل، الوصف، الحالة.'],chooseFile:['Choose Excel file','اختر ملف Excel'],dropHint:['.xlsx file, up to 1,000 rows','ملف xlsx حتى 1,000 صف'],fileReady:['File ready','الملف جاهز'],rowsWord:['rows','صفاً'],removeFile:['Remove','إزالة'],continue:['Continue','متابعة'],validRows:['Valid rows','صفوف صحيحة'],errorRows:['Rows with errors','صفوف بها أخطاء'],errorsSkipped:['Rows with errors will be skipped. You can fix them in the file and upload it again.','سيتم تجاهل الصفوف التي بها أخطاء. يمكنك تصحيحها في الملف ورفعه مرة أخرى.'],colRow:['Row','الصف'],colReason:['Reason','السبب'],back:['Back','رجوع'],confirmImport:['Create 46 shipments','إنشاء 46 شحنة'],importDone:['46 shipments created','تم إنشاء 46 شحنة'],importDoneSub:['Download the shipment numbers to share them with your customers.','نزّل أرقام الشحنات لمشاركتها مع العملاء.'],downloadNumbers:['Download shipment numbers','تنزيل أرقام الشحنات'],downloading:['Downloading file…','جارٍ تنزيل الملف…'],
+err1:['Mobile number is not valid','رقم الجوال غير صحيح'],err2:['Status “Shipped” does not exist','الحالة «تم الشحن» غير موجودة'],err3:['Customer mobile is missing','جوال العميل مفقود'],
+addCustomer:['Add customer','إضافة عميل'],colName:['Name','الاسم'],colMobile:['Mobile','الجوال'],colShipments:['Shipments','الشحنات'],custSearch:['Search by name or mobile','ابحث بالاسم أو الجوال'],backToCustomers:['Back to customers','العودة إلى العملاء'],ncHint:['After saving, use “Reset password” to create the customer’s first temporary password.','بعد الحفظ، استخدم «إعادة تعيين كلمة المرور» لإنشاء أول كلمة مرور مؤقتة للعميل.'],custAdded:['Customer added','تمت إضافة العميل'],
+resetPw:['Reset password','إعادة تعيين كلمة المرور'],resetConfirmTitle:['Reset this customer’s password?','إعادة تعيين كلمة مرور هذا العميل؟'],resetConfirmText:['A temporary password will be created. The current password will stop working.','سيتم إنشاء كلمة مرور مؤقتة، ولن تعمل كلمة المرور الحالية بعد ذلك.'],resetYes:['Yes, reset','نعم، أعد التعيين'],tempTitle:['Temporary password','كلمة المرور المؤقتة'],tempOnce:['This password is shown only once.','تظهر كلمة المرور هذه مرة واحدة فقط.'],tempNote:['Share it with the customer. They will be asked to change it at first login.','شاركها مع العميل. سيُطلب منه تغييرها عند أول تسجيل دخول.'],mustChange:['Must change password at next login','يجب تغيير كلمة المرور عند الدخول'],customerShipments:['Shipments','الشحنات'],noShipments:['No shipments yet.','لا توجد شحنات بعد.'],
+statusesSub:['Drag rows to change the order. Statuses used by shipments cannot be deleted, only deactivated.','اسحب الصفوف لتغيير الترتيب. الحالات المستخدمة في شحنات لا يمكن حذفها، ويمكن إيقافها فقط.'],addStatus:['Add status','إضافة حالة'],editStatus:['Edit status','تعديل الحالة'],nameAr:['Arabic name','الاسم بالعربية'],nameEn:['English name','الاسم بالإنجليزية'],color:['Color','اللون'],icon:['Icon','الأيقونة'],finalStatus:['Final status','حالة نهائية'],finalHint:['The shipment is finished, for example delivered or returned.','الشحنة انتهت، مثل التسليم أو الإرجاع.'],pushToggle:['Send push notification','إرسال إشعار'],pushHint:['Notify the customer when a shipment moves to this status.','إشعار العميل عند انتقال الشحنة إلى هذه الحالة.'],preview:['Preview','معاينة'],final:['Final','نهائية'],push:['Notification','إشعار'],inUse:['Used by {n} shipments','مستخدمة في {n} شحنة'],notUsed:['Not used yet','غير مستخدمة بعد'],active:['Active','مفعّلة'],inactive:['Inactive','موقوفة'],delete:['Delete','حذف'],cannotDelete:['In use — deactivate only','مستخدمة — الإيقاف فقط'],edit:['Edit','تعديل'],statusSaved:['Status saved','تم حفظ الحالة'],statusDeleted:['Status deleted','تم حذف الحالة'],orderSaved:['Order saved','تم حفظ الترتيب'],
+contactTitle:['Contact number for customers','رقم التواصل للعملاء'],contactHint:['Shown in the app under “Forgot password?” for calls and WhatsApp.','يظهر في التطبيق تحت «نسيت كلمة المرور؟» للاتصال وواتساب.'],saved:['Saved','تم الحفظ'],staffTitle:['Staff accounts','حسابات الموظفين'],addStaff:['Add staff','إضافة موظف'],colEmail:['Email','البريد الإلكتروني'],colRole:['Role','الدور'],colState:['Status','الحالة'],roleManager:['Manager','مدير'],roleStaff:['Staff','موظف'],disable:['Disable','تعطيل'],enable:['Enable','تفعيل'],disabled:['Disabled','معطّل'],enabled:['Active','نشط'],staffAdded:['Staff account added','تمت إضافة الموظف'],name:['Full name','الاسم الكامل']};
+const ADD0={mobile:'',custId:null,name:'',desc:'',status:'received',doneNo:null,err:false};
+const CH='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const gen=n=>Array.from({length:n},()=>CH[Math.floor(Math.random()*CH.length)]).join('');
+const curSt=x=>x.hist[x.hist.length-1].st;
+const PAGE=6;
+
+class Component extends DCLogic {
+  state={lang:'ar',screen:'login',email:'sara@company.sa',lpw:'demo1234',loginErr:false,ships:SHIP0,custs:CUST0,statuses:ST0,staff:STAFF0,contact:'+966 11 456 7890',sel:'AB7K2M9XQ4',selCust:'c1',search:'',fStatus:'all',fDate:'all',page:1,custSearch:'',modal:null,add:ADD0,upd:{status:'transit',note:''},upStep:1,file:false,tempPw:'',must:{},se:null,newCust:{name:'',mobile:''},newStaff:{name:'',email:'',role:'staff'},drag:null,toast:null,flow:null};
+  componentWillUnmount(){clearTimeout(this.tt);}
+  toast(k){clearTimeout(this.tt);this.setState({toast:k});this.tt=setTimeout(()=>this.setState({toast:null}),2400);}
+  nav(screen,extra){this.setState({screen,modal:null,...(extra||{})});}
+  openShip(no){const x=this.state.ships.find(s=>s.no===no);this.nav('shipment',{sel:no,upd:{status:curSt(x),note:''}});}
+  setAdd(p){this.setState(s=>({add:{...s.add,...p,err:false}}));}
+  saveAdd(){const s=this.state,a=s.add,l=s.lang;let cid=a.custId,custs=s.custs;const m=a.mobile.replace(/\D/g,'');
+    if(!cid){if(m.length<10||!a.name.trim()){this.setAdd({});this.setState(st=>({add:{...st.add,err:true}}));return;}cid='c'+(custs.length+1);custs=[...custs,{id:cid,name:L(a.name,a.name),mobile:m}];}
+    const no=gen(10),d=a.desc.trim();
+    const ship={no,cust:cid,desc:L(d||'—',d||'—'),age:0,upd:L('Just now','الآن'),hist:[h(a.status,'Today, just now','اليوم، الآن','s1')]};
+    this.setState({custs,ships:[ship,...s.ships],add:{...a,doneNo:no},modal:'addDone',page:1});}
+  saveUpd(){const s=this.state,u=s.upd,st=s.statuses.find(x=>x.id===u.status);const n=u.note.trim();
+    this.setState({ships:s.ships.map(x=>x.no===s.sel?{...x,age:0,upd:L('Just now','الآن'),hist:[...x.hist,{st:u.status,at:L('Today, just now','اليوم، الآن'),by:'s1',note:n?L(n,n):null}]}:x),upd:{...u,note:''}});
+    this.toast(st&&st.push?'statusUpdated':'statusUpdatedNoPush');}
+  startFlow(i){
+    if(i===0)this.nav('login');
+    if(i===1)this.setState({screen:'shipments',modal:'add',add:ADD0});
+    if(i===2)this.openShip('AB7K2M9XQ4');
+    if(i===3)this.nav('upload',{upStep:1,file:false});
+    if(i===4)this.nav('customer',{selCust:'c1'});
+    if(i===5)this.nav('statuses');
+    this.setState({flow:i});}
+  saveStatus(){const s=this.state,e=s.se;if(!e.ar.trim()||!e.en.trim())return;
+    let list;if(e.id)list=s.statuses.map(x=>x.id===e.id?{...x,...e}:x);else list=[...s.statuses,{...e,id:'st'+Date.now(),active:true}];
+    this.setState({statuses:list,modal:null,se:null});this.toast('statusSaved');}
+  renderVals(){
+    const s=this.state,P=this.props,l=s.lang,rtl=l==='ar',li=rtl?1:0;
+    const t={};for(const k in K)t[k]=K[k][li];
+    const pr=P.primaryColor||'#1D4F91',prSoft=pr+'14';
+    const brand=rtl?(P.brandAr||'تتبع الشحنات'):(P.brandEn||'Shipment Tracker');
+    const stMap={};s.statuses.forEach(x=>stMap[x.id]=x);
+    const cm={};s.custs.forEach(c=>cm[c.id]=c);
+    const badge=(id,sz)=>{const x=stMap[id]||{en:id,ar:id,tone:'gray',icon:'tag'};const tn=TONES[x.tone];return {name:x[l],bg:tn.bg,fg:tn.fg,icon:ic(x.icon,sz||16,tn.fg)};};
+    const sw=on=>({track:on?pr:'#D0D5DD',justify:on?'flex-end':'flex-start'});
+    const fmt=(str,o)=>str.replace(/\{(\w+)\}/g,(_,k)=>o[k]);
+    // shipments list
+    const q=s.search.trim().toUpperCase(),qd=q.replace(/\D/g,'');
+    const filtered=s.ships.filter(x=>{const c=cm[x.cust];if(q&&!(x.no.includes(q)||(qd.length>=3&&c.mobile.includes(qd))))return false;if(s.fStatus!=='all'&&curSt(x)!==s.fStatus)return false;if(s.fDate==='today'&&x.age>0)return false;if(s.fDate==='7'&&x.age>7)return false;if(s.fDate==='30'&&x.age>30)return false;return true;});
+    const nPages=Math.max(1,Math.ceil(filtered.length/PAGE)),page=Math.min(s.page,nPages);
+    const shipRow=x=>({no:x.no,cname:cm[x.cust].name[l],mobile:cm[x.cust].mobile,desc:x.desc[l],b:badge(curSt(x)),upd:x.upd[l],open:()=>this.openShip(x.no)});
+    const rows=filtered.slice((page-1)*PAGE,page*PAGE).map(shipRow);
+    const curShip=s.ships.find(x=>x.no===s.sel)||s.ships[0];
+    const cur={...shipRow(curShip),bigIcon:ic(stMap[curSt(curShip)]?stMap[curSt(curShip)].icon:'tag',22,TONES[(stMap[curSt(curShip)]||{tone:'gray'}).tone].fg),
+      hist:curShip.hist.slice().reverse().map(e=>({b:badge(e.st),note:e.note?e.note[l]:'—',noteColor:e.note?'#344054':'#98A2B3',by:BY[e.by][l],at:e.at[l]}))};
+    const updSt=stMap[s.upd.status];const willPush=updSt&&updSt.push;
+    const activeSts=s.statuses.filter(x=>x.active);
+    const statusOpts=activeSts.map(x=>({id:x.id,name:x[l]}));
+    const usedBy=id=>s.ships.filter(x=>x.hist.some(e=>e.st===id)).length;
+    // customers
+    const cq=s.custSearch.trim().toLowerCase();
+    const custRows=s.custs.filter(c=>!cq||c.name.en.toLowerCase().includes(cq)||c.name.ar.includes(cq)||c.mobile.includes(cq)).map(c=>({name:c.name[l],initial:c.name[l].charAt(0),mobile:c.mobile,count:s.ships.filter(x=>x.cust===c.id).length,open:()=>this.nav('customer',{selCust:c.id})}));
+    const ccust=cm[s.selCust]||s.custs[0];const ccShips=s.ships.filter(x=>x.cust===ccust.id).map(shipRow);
+    const cc={name:ccust.name[l],initial:ccust.name[l].charAt(0),mobile:ccust.mobile,must:!!s.must[ccust.id],ships:ccShips,none:ccShips.length===0};
+    // statuses
+    const stRows=s.statuses.map((x,i)=>{const u=usedBy(x.id);return {order:i+1,b:badge(x.id),other:rtl?x.en:x.ar,final:x.final,push:x.push,usedText:u?fmt(t.inUse,{n:u}):t.notUsed,canDelete:u===0,locked:u>0,sw:sw(x.active),activeText:x.active?t.active:t.inactive,opacity:x.active?1:0.5,
+      bg:s.drag===x.id?'#F2F4F7':'#fff',borderTop:i===0?'0':'1px solid #F2F4F7',
+      onToggle:()=>this.setState({statuses:s.statuses.map(y=>y.id===x.id?{...y,active:!y.active}:y)}),
+      onEdit:()=>this.setState({modal:'status',se:{id:x.id,ar:x.ar,en:x.en,tone:x.tone,icon:x.icon,final:x.final,push:x.push}}),
+      onDelete:()=>{this.setState({statuses:s.statuses.filter(y=>y.id!==x.id)});this.toast('statusDeleted');},
+      onDragStart:e=>{e.dataTransfer.effectAllowed='move';try{e.dataTransfer.setData('text/plain',x.id);}catch(_){}this.setState({drag:x.id});},
+      onDragOver:e=>{e.preventDefault();},
+      onDrop:e=>{e.preventDefault();const from=this.state.drag;if(!from||from===x.id)return;const arr=this.state.statuses.slice();const fi=arr.findIndex(y=>y.id===from);const [it]=arr.splice(fi,1);const ti=arr.findIndex(y=>y.id===x.id);arr.splice(fi<=ti?ti+1:ti,0,it);this.setState({statuses:arr,drag:null});this.toast('orderSaved');},
+      onDragEnd:()=>this.setState({drag:null})};});
+    const e=s.se;
+    const se=e?{title:e.id?t.editStatus:t.addStatus,ar:e.ar,en:e.en,pvAr:e.ar||'—',pvEn:e.en||'—',
+      onAr:ev=>this.setState({se:{...this.state.se,ar:ev.target.value}}),onEn:ev=>this.setState({se:{...this.state.se,en:ev.target.value}}),
+      tones:Object.keys(TONES).map(k=>({name:k,solid:TONES[k].solid,ring:e.tone===k?'#101828':'transparent',onClick:()=>this.setState({se:{...this.state.se,tone:k}})})),
+      icons:ICONS.map(k=>({icon:ic(k,22,e.icon===k?TONES[e.tone].fg:'#475467'),border:e.icon===k?TONES[e.tone].solid:'#EAECF0',bg:e.icon===k?TONES[e.tone].bg:'#fff',onClick:()=>this.setState({se:{...this.state.se,icon:k}})})),
+      finalSw:sw(e.final),pushSw:sw(e.push),onFinal:()=>this.setState({se:{...e,final:!e.final}}),onPush:()=>this.setState({se:{...e,push:!e.push}}),
+      pv:{bg:TONES[e.tone].bg,fg:TONES[e.tone].fg,icon:ic(e.icon,16,TONES[e.tone].fg),icon2:ic(e.icon,16,TONES[e.tone].fg)},opacity:(e.ar.trim()&&e.en.trim())?1:0.45,onSave:()=>this.saveStatus()}:{tones:[],icons:[],finalSw:{},pushSw:{},pv:{}};
+    // add shipment
+    const a=s.add,am=a.mobile.replace(/\D/g,'');
+    const matches=!a.custId&&am.length>=3?s.custs.filter(c=>c.mobile.includes(am)).slice(0,4):[];
+    const picked=a.custId?cm[a.custId]:null;
+    const add={mobile:a.mobile,notPicked:!picked,picked:!!picked,pickedName:picked?picked.name[l]:'',pickedMobile:picked?picked.mobile:'',
+      matches:matches.map(c=>({name:c.name[l],mobile:c.mobile,onPick:()=>this.setAdd({custId:c.id,mobile:c.mobile})})),
+      isNew:!picked&&am.length>=10&&matches.length===0,name:a.name,desc:a.desc,status:a.status,err:a.err,doneNo:a.doneNo,mBorder:a.err?'#D92D20':'#D0D5DD',
+      onMobile:ev=>this.setAdd({mobile:ev.target.value.replace(/[^\d ]/g,'').slice(0,12)}),onName:ev=>this.setAdd({name:ev.target.value}),onDesc:ev=>this.setAdd({desc:ev.target.value}),onStatus:ev=>this.setAdd({status:ev.target.value}),
+      onChange:()=>this.setAdd({custId:null,mobile:''}),onSave:()=>this.saveAdd()};
+    const md=s.modal;
+    const FL=['Login','1 · Add shipment','2 · Update status','3 · Excel upload','4 · Reset password','5 · Status management'];
+    const navItems=[['shipments','package',t.navShipments,false],['customers','users',t.navCustomers,false],['statuses','tag',t.navStatuses,true],['settings','sliders',t.navSettings,true]];
+    const section={shipments:'shipments',shipment:'shipments',upload:'shipments',customers:'customers',customer:'customers',statuses:'statuses',settings:'settings'}[s.screen];
+    const nc=s.newCust,ns=s.newStaff;
+    return {
+      t,dir:rtl?'rtl':'ltr',font:rtl?"'IBM Plex Sans Arabic', sans-serif":"'IBM Plex Sans', sans-serif",align:rtl?'right':'left',pr,prSoft,brand,brandEn:P.brandEn||'Shipment Tracker',
+      urlPath:{login:'login',shipments:'shipments',shipment:'shipments/'+s.sel,upload:'shipments/upload',customers:'customers',customer:'customers/'+s.selCust,statuses:'statuses',settings:'settings'}[s.screen],
+      i:{logo:ic('package',20,'#fff'),search:ic('search',18,'#667085'),upload:ic('upload',18,'#101828'),plusW:ic('plus',18,'#fff'),plus:ic('plus',18,'#101828'),back:ic(rtl?'arrowR':'arrowL',18,'#475467'),fwd:ic(rtl?'chevL':'chevR',18,'#98A2B3'),copy:ic('copy',16,pr),copyW:ic('copy',16,'#fff'),download:ic('download',18,'#101828'),downloadW:ic('download',18,'#fff'),fileBig:ic('file',40,'#98A2B3',1.6),fileGreen:ic('file',32,'#067647'),checkGreen:ic('check',32,'#067647',2.5),checkPr:ic('check',20,pr,2.5),checkW:ic('check',18,'#fff'),lock:ic('lock',18,'#101828'),lockSm:ic('lock',14,'#667085'),grip:ic('grip',20,'#98A2B3',3),edit:ic('edit',16,'#344054'),trash:ic('trash',16,'#B42318'),bellSm:ic('bell',12,'#344054'),alertAmber:ic('alert',28,'#B54708'),alertAmberSm:ic('alert',18,'#B54708'),logout:ic('logout',18,'#B42318')},
+      flows:FL.map((label,i)=>{const on=s.flow===i;return {label,bg:on?pr:'#fff',fg:on?'#fff':'#101828',border:on?pr:'#D0D5DD',onClick:()=>this.startFlow(i)};}),
+      langSeg:[['ar','العربية',"'IBM Plex Sans Arabic',sans-serif"],['en','English',"'IBM Plex Sans',sans-serif"]].map(([k,lab,f])=>{const on=l===k;return {label:lab,font:f,bg:on?'#101828':'transparent',fg:on?'#fff':'#344054',onClick:()=>this.setState({lang:k})};}),
+      v:{login:s.screen==='login',app:s.screen!=='login',shipments:s.screen==='shipments',shipment:s.screen==='shipment',upload:s.screen==='upload',customers:s.screen==='customers',customer:s.screen==='customer',statuses:s.screen==='statuses',settings:s.screen==='settings'},
+      email:s.email,lpw:s.lpw,loginErr:s.loginErr,onEmail:ev=>this.setState({email:ev.target.value,loginErr:false}),onLpw:ev=>this.setState({lpw:ev.target.value,loginErr:false}),
+      onLogin:()=>{if(!s.email.trim()||!s.lpw){this.setState({loginErr:true});return;}this.nav('shipments');},onLoginKey:ev=>{if(ev.key==='Enter'){if(!s.email.trim()||!s.lpw){this.setState({loginErr:true});return;}this.nav('shipments');}},
+      onLogout:()=>this.nav('login'),
+      nav:navItems.map(([k,icn,label,mgr])=>{const on=section===k;return {label,mgr,icon:ic(icn,20,on?pr:'#475467'),bg:on?prSoft:'transparent',fg:on?pr:'#344054',onClick:()=>this.nav(k)};}),
+      goUpload:()=>this.nav('upload',{upStep:1,file:false}),openAdd:()=>this.setState({modal:'add',add:ADD0}),goShipments:()=>this.nav('shipments'),goCustomers:()=>this.nav('customers'),
+      search:s.search,onSearch:ev=>this.setState({search:ev.target.value,page:1}),fStatus:s.fStatus,onFStatus:ev=>this.setState({fStatus:ev.target.value,page:1}),fDate:s.fDate,onFDate:ev=>this.setState({fDate:ev.target.value,page:1}),
+      statusOptsAll:s.statuses.map(x=>({id:x.id,name:x[l]})),statusOpts,
+      rows,noRows:rows.length===0,pageText:filtered.length?fmt(t.showing,{a:(page-1)*PAGE+1,b:Math.min(page*PAGE,filtered.length),n:filtered.length}):'',
+      pages:Array.from({length:nPages},(_,i)=>{const on=i+1===page;return {n:i+1,bg:on?'#101828':'#fff',fg:on?'#fff':'#344054',border:on?'#101828':'#D0D5DD',onClick:()=>this.setState({page:i+1})};}),
+      prevPage:()=>this.setState({page:Math.max(1,page-1)}),nextPage:()=>this.setState({page:Math.min(nPages,page+1)}),
+      cur,onCopyCur:()=>this.toast('copied'),upd:s.upd,onUpdStatus:ev=>this.setState({upd:{...s.upd,status:ev.target.value}}),onUpdNote:ev=>this.setState({upd:{...s.upd,note:ev.target.value}}),onUpdSave:()=>this.saveUpd(),
+      pushBox:willPush?{bg:prSoft,fg:'#101828',icon:ic('bell',18,pr),text:t.pushNote}:{bg:'#F2F4F7',fg:'#475467',icon:ic('info',18,'#667085'),text:t.noPushNote},
+      steps:[t.step1,t.step2,t.step3].map((name,i)=>{const n=i+1,done=n<s.upStep,on=n===s.upStep;return {n:done?'✓':n,name,line:i<2,bg:done?'#16A34A':(on?pr:'#E4E7EC'),fg:(done||on)?'#fff':'#475467',label:(done||on)?'#101828':'#667085'};}),
+      up:{s1:s.upStep===1,s2:s.upStep===2,s3:s.upStep===3},file:s.file,noFile:!s.file,step1Opacity:s.file?1:0.45,
+      onTemplate:()=>this.toast('downloading'),onChooseFile:()=>this.setState({file:true}),onRemoveFile:()=>this.setState({file:false}),
+      toStep2:()=>{if(s.file)this.setState({upStep:2});},toStep1:()=>this.setState({upStep:1}),toStep3:()=>this.setState({upStep:3}),onDownloadNums:()=>this.toast('downloading'),
+      upErrors:[[7,'err1'],[15,'err2'],[32,'err3']].map(([row,k])=>({row,reason:t[k]})),
+      custSearch:s.custSearch,onCustSearch:ev=>this.setState({custSearch:ev.target.value}),custRows,cc,
+      openAddCust:()=>this.setState({modal:'addCust',newCust:{name:'',mobile:''}}),
+      newCust:nc,onNcName:ev=>this.setState({newCust:{...this.state.newCust,name:ev.target.value}}),onNcMobile:ev=>this.setState({newCust:{...this.state.newCust,mobile:ev.target.value.replace(/[^\d]/g,'').slice(0,10)}}),
+      ncOpacity:(nc.name.trim()&&nc.mobile.length===10)?1:0.45,
+      onSaveCust:()=>{if(!nc.name.trim()||nc.mobile.length!==10)return;const id='c'+(s.custs.length+1);this.setState({custs:[...s.custs,{id,name:L(nc.name,nc.name),mobile:nc.mobile}],modal:null});this.toast('custAdded');},
+      openReset:()=>this.setState({modal:'reset'}),onConfirmReset:()=>this.setState({modal:'temp',tempPw:gen(4)+'-'+gen(4),must:{...s.must,[ccust.id]:true}}),tempPw:s.tempPw,onCopyTemp:()=>this.toast('copied'),
+      stRows,openNewStatus:()=>this.setState({modal:'status',se:{id:null,ar:'',en:'',tone:'blue',icon:'package',final:false,push:true}}),se,
+      contact:s.contact,onContact:ev=>this.setState({contact:ev.target.value}),onSaveContact:()=>this.toast('saved'),
+      staffRows:s.staff.map(x=>({name:x.name[l],email:x.email,role:x.role==='manager'?t.roleManager:t.roleStaff,state:x.active?t.enabled:t.disabled,stBg:x.active?'#E7F6EC':'#F2F4F7',stFg:x.active?'#067647':'#475467',nameColor:x.active?'#101828':'#98A2B3',canToggle:!x.me,action:x.active?t.disable:t.enable,onToggle:()=>this.setState({staff:s.staff.map(y=>y.id===x.id?{...y,active:!y.active}:y)})})),
+      openAddStaff:()=>this.setState({modal:'staff',newStaff:{name:'',email:'',role:'staff'}}),newStaff:ns,
+      onNsName:ev=>this.setState({newStaff:{...this.state.newStaff,name:ev.target.value}}),onNsEmail:ev=>this.setState({newStaff:{...this.state.newStaff,email:ev.target.value}}),
+      roleSeg:[['staff',t.roleStaff],['manager',t.roleManager]].map(([k,label])=>{const on=ns.role===k;return {label,bg:on?'#fff':'transparent',fg:on?'#101828':'#475467',shadow:on?'0 1px 3px rgba(16,24,40,0.12)':'none',onClick:()=>this.setState({newStaff:{...this.state.newStaff,role:k}})};}),
+      nsOpacity:(ns.name.trim()&&ns.email.includes('@'))?1:0.45,
+      onSaveStaff:()=>{if(!ns.name.trim()||!ns.email.includes('@'))return;this.setState({staff:[...s.staff,{id:'s'+Date.now(),name:L(ns.name,ns.name),email:ns.email,role:ns.role,active:true}],modal:null});this.toast('staffAdded');},
+      add,onCopyNew:()=>this.toast('copied'),
+      m:{any:!!md,add:md==='add',addDone:md==='addDone',addCust:md==='addCust',reset:md==='reset',temp:md==='temp',status:md==='status',staff:md==='staff'},
+      closeModal:()=>this.setState({modal:null}),
+      hasToast:!!s.toast,toastText:s.toast?t[s.toast]:''
+    };
+  }
+}
+</script>
+</body>
+</html>
